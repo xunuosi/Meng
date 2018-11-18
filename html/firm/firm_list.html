@@ -1,0 +1,103 @@
+<meta charset="UTF-8"/>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">公司列表</span>
+                </div>
+                <div class="card-body">
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="toolbar">
+    <button type="button" class="btn btn-space btn-success" onclick="loadPage('./html/firm/firm_add.html')">新增
+    </button>
+    <button type="button" class="btn btn-space btn-danger" onclick="delData()">删除
+    </button>
+</div>
+<script>
+
+    $(function () {
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            url: './firms',
+            method: 'get',                      //请求方式（*）
+            pagination: true,  //是否分页
+            dataType: "json",
+            sidePagination: "server", //服务端处理分页
+            silentSort: false,
+            pageList: [10, 25, 50, 100],
+            pageSize: 10,
+            pageNumber: 1,
+            detailView: false,
+            /*   showColumns: true,                  //是否显示所有的列
+               showRefresh: true,        */          //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            toolbar: '#toolbar',
+            clickToSelect: true,                //是否启用点击选中行
+            queryParams: function (params) {
+                var pageNo = 0;
+                if (params.offset == 0) {
+                    pageNo = 1;
+                } else {
+                    pageNo = params.offset / params.limit + 1;
+                }
+
+                var json = {
+                    "pageSize": params.limit,
+                    "pageNum": pageNo
+                };
+                return json;
+            },
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'name',
+                title: '公司名称'
+            }, {
+                field: 'address',
+                title: '公司地址'
+            }, {
+                field: 'tel',
+                title: '联系电话'
+            }, {
+                field: 'fax',
+                title: '公司传真'
+            },{
+                field: 'uuid', title: "操作", formatter: function (value, row, index) {
+                    var html = "<button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"editData('"+row.uuid+"')\">修改</button>";
+
+                    return html;
+                }
+            }]
+        });
+    });
+
+
+    function delData() {
+        var data = $('#table').bootstrapTable('getSelections');
+        var ids = "";
+        $.each(data, function (index, value) {
+            ids += value.uuid + ",";
+        });
+        console.log(ids);
+        if (ids != null) {
+            $.get("./firms/delete?id=" + ids, function (result) {
+                if (result.code != 0) {
+                    alert(result.msg);
+                }
+                $('#table').bootstrapTable('refresh');
+            }, "json");
+        }
+    }
+
+    function editData(uuid) {
+        storage.setItem("uuid", uuid);
+        loadPage("html/firm/firm_edit.html");
+    }
+</script>

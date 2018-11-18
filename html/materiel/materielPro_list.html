@@ -1,0 +1,173 @@
+<head>
+    <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
+</head>
+<meta charset="UTF-8" />
+<div class="main-content container-fluid">
+    <div class="row padding-lr-common">
+        <div class="col-md-12  border-top-color  border-bottom-color bg-white">
+            <div class="row padding-lr-common">
+                <div class="col-md-4">
+                    <label for="input_num" class="right-center-label">物料内部编号:</label>
+                    <input id="input_num" class="common-text-view max-length" placeholder="输入物料内部编号">
+                </div>
+                <div class="col-md-4">
+                    <label for="input_name" class="right-center-label">成品物料名称:</label>
+                    <input id="input_name" class="common-text-view max-length" placeholder="输入成品名称">
+                </div>
+                <div class="col-md-4">
+                    <label for="input_sampleName" class="right-center-label">成品主料名称:</label>
+                    <input id="input_sampleName" class="common-text-view max-length" placeholder="输入主料名称">
+                </div>
+            </div>
+            <div class="row padding-lr-common">
+                <div class="col-md-4">
+                    <label for="input_width" class="right-center-label">成品窗帘宽度:</label>
+                    <input id="input_width" data-parsley-trigger="input" data-parsley-type="number" step="0.1" data-parsley-error-message="只能输入位数为1位的小数" class="common-text-view max-length" placeholder="输入窗帘宽度0.0">
+                </div>
+                <div class="col-md-4">
+                    <label for="input_height" class="right-center-label">成品窗帘高度:</label>
+                    <input id="input_height"  data-parsley-trigger="input" data-parsley-type="number" step="0.1" data-parsley-error-message="只能输入位数为1位的小数" class="common-text-view max-length" placeholder="输入窗帘高度0.0">
+                </div>
+            </div>
+            <div class="row padding-common">
+                <p class="line-center">
+                    <button type="button" class="btn btn-space btn-primary common-btn" onclick="searchMaterielList()">搜索</button>
+                    <button class="btn btn-space btn-secondary common-btn" onclick="resetHtml()">重置</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row space-margin-top">
+        <div class="col-md-12">
+            <div class="card card-table">
+                <div class="card-body margin-common">
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toolbar" class="space-margin-top">
+    <button type="button" class="btn btn-space btn-success" onclick="loadPage('./html/materiel/materielPro_add.html')">新增
+    </button>
+    <button type="button" class="btn btn-space btn-danger" onclick="delData()">删除
+    </button>
+</div>
+<script>
+    $(document).ready(function () {
+        $(".page-title span").text("成品列表");
+    });
+
+    function resetHtml() {
+        // 重载页面
+        loadPage("html/materiel/materielPro_list.html");
+    }
+
+    function searchMaterielList() {
+        $('#table').bootstrapTable("refresh");
+    }
+
+    $(function () {
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            url: './materielPro',
+            method: 'get', //请求方式（*）
+            pagination: true, //是否分页
+            dataType: "json",
+            sidePagination: "server", //服务端处理分页
+            silentSort: false,
+            pageList: [10, 25, 50, 100],
+            pageSize: 10,
+            pageNumber: 1,
+            detailView: false,
+            /*   showColumns: true,                  //是否显示所有的列
+               showRefresh: true,        */ //是否显示刷新按钮
+            minimumCountColumns: 2, //最少允许的列数
+            toolbar: '#toolbar',
+            clickToSelect: true, //是否启用点击选中行
+            queryParams: function (params) {
+                var pageNo = 0;
+                if (params.offset == 0) {
+                    pageNo = 1;
+                } else {
+                    pageNo = params.offset / params.limit + 1;
+                }
+                // 验证宽度和高度输入是否正确
+                var width = "";
+                if ($("#input_width").parsley().isValid()) {
+                    width = formatNumber($("#input_width").val(), 1);
+                    $("#input_width").val(width);
+                }
+                var height = "";
+                if ($("#input_height").parsley().isValid()) {
+                    height = formatNumber($("#input_height").val(), 1);
+                    $("#input_height").val(height);
+                }
+
+                var json = {
+                    "pageSize": params.limit,
+                    "pageNum": pageNo,
+                    "AND_EQ_internalId": $("#input_num").val(),
+                    "AND_LIKE_name": $("#input_name").val(),
+                    "AND_LIKE_sampleName": $("#input_sampleName").val(),
+                    "AND_EQ_curtainWidth": width,
+                    "AND_EQ_curtainHeight": height
+                };
+                return json;
+            },
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'internalId',
+                title: '物料内部编号'
+            }, {
+                field: 'name',
+                title: '成品物料名称'
+            }, {
+                field: 'sampleName',
+                title: '成品主料名称'
+            }, {
+                field: 'curtainWidth',
+                title: '窗帘宽度'
+            }, {
+                field: 'curtainHeight',
+                title: '窗帘高度'
+            }, {
+                field: 'matid',
+                title: "操作",
+                formatter: function (value, row, index) {
+                    var html =
+                        "<button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"editData('" +
+                        row.matid + "')\">修改</button>";
+                    return html;
+                }
+            }]
+        });
+    });
+
+
+    function delData() {
+        var data = $('#table').bootstrapTable('getSelections');
+        var ids = "";
+        $.each(data, function (index, value) {
+            ids += value.matid + ",";
+        });
+        // console.log(ids);
+        if (ids != null) {
+            $.get("./materielPro/delete?id=" + ids, function (result) {
+                if (result.code != 0) {
+                    alert(result.msg);
+                }
+                $('#table').bootstrapTable('refresh');
+            }, "json");
+        }
+    }
+
+    function editData(matid) {
+        storage.setItem("matid", matid);
+        // console.log("edit");
+        loadPage("html/materiel/materielPro_edit.html");
+    }
+</script>

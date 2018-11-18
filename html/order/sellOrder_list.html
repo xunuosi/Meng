@@ -1,0 +1,270 @@
+<head>
+    <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
+</head>
+<meta charset="UTF-8" />
+<div class="main-content container-fluid">
+    <div class="row padding-lr-common">
+        <div class="col-md-12  border-top-color  border-bottom-color bg-white">
+            <div class="row padding-lr-common">
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">订单日期</span>
+                    <div class="filter-container">
+                        <form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="sOrderDate" class="control-label">起始:</label>
+                                    <input id="sOrderDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control form-control-sm datetimepicker">
+                                </div>
+                                <div class="col-6">
+                                    <label for="eOrderDate" class="control-label">至:</label>
+                                    <input id="eOrderDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control form-control-sm datetimepicker">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">查询条件</span>
+                    <div class="filter-container">
+                        <label for="input_name">查询关键字:</label>
+                        <input id="input_name" class="common-text-view max-length" placeholder="输入查询关键字">
+                    </div>
+                </div>
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">订单状态</span>
+                    <div class="filter-container">
+                        <label for="orderStatus" class="control-label">选择订单状态:</label>
+                        <form>
+                            <select id="orderStatus" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                <option value="">未选择</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row padding-common">
+                <p class="line-center">
+                    <button type="button" class="btn btn-space btn-primary common-btn" onclick="searchSellorderList()">搜索</button>
+                    <button class="btn btn-space btn-secondary common-btn" onclick="resetHtml()">重置</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row space-margin-top">
+        <div class="col-md-12">
+            <div class="card card-table">
+                <div class="card-body margin-common">
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div id="toolbar" class="space-margin-top">
+    <button type="button" class="btn btn-space btn-success" onclick="loadPage('./html/materiel/materielRaw_add.html')">新增
+    </button>
+    <button type="button" class="btn btn-space btn-danger" onclick="delData()">删除
+    </button>
+</div> -->
+<script>
+    var orderStatusList = new Array();
+
+    $(document).ready(function () {
+        console.log("sellOrder_list.html");
+        App.tableFilters();
+        $(".page-title span").text("订单列表");
+        selectInit("orderStatus", "orderStatus", null, orderStatusList);
+    });
+
+    function searchMaterielList() {
+        $('#table').bootstrapTable("refresh");
+    }
+
+    $(function () {
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            url: './sellOrders',
+            method: 'get', //请求方式（*）
+            pagination: true, //是否分页
+            dataType: "json",
+            sidePagination: "server", //服务端处理分页
+            silentSort: false,
+            pageList: [10, 25, 50, 100],
+            pageSize: 10,
+            pageNumber: 1,
+            detailView: false,
+            /*   showColumns: true,                  //是否显示所有的列
+               showRefresh: true,        */ //是否显示刷新按钮
+            minimumCountColumns: 2, //最少允许的列数
+            clickToSelect: true, //是否启用点击选中行
+            queryParams: function (params) {
+                var pageNo = 0;
+                if (params.offset == 0) {
+                    pageNo = 1;
+                } else {
+                    pageNo = params.offset / params.limit + 1;
+                }
+
+                var json = {
+                    "pageSize": params.limit,
+                    "pageNum": pageNo,
+                    "AND_EQ_orderStatus": $("#orderStatus").val(),
+                    "AND_LIKE_cltName": $("#input_name").val(),
+                    "AND_BETWEEN_cOrdDate": $("#sOrderDate").val() + "&" + $("#eOrderDate").val()
+                };
+                return json;
+            },
+            columns: [{
+                checkbox: true
+            }, {
+                field: 'id',
+                title: '订单编号'
+            }, {
+                field: 'cltName',
+                title: '客户名称'
+            }, {
+                field: 'address',
+                title: '邮寄地址'
+            }, {
+                field: 'cOrdDate',
+                title: '订单创建日期',
+                formatter: function (value, row, index) {
+                    var html = "<span>" +
+                                value +
+                                "</span>";
+                    return html;
+                }
+            }, {
+                field: 'recoSendDate',
+                title: '建议发货日期',
+                formatter: function (value, row, index) {
+                    var html = "<span>" +
+                                value +
+                                "</span>";
+                    return html;
+                }
+            }, {
+                field: 'totalCost',
+                title: '订单总计金额(元)'
+            }, {
+                field: 'orderStatus',
+                title: '订单状态',
+                formatter: function (value, row, index) {
+                    var html = "<span>" +
+                                getDicNameByCode(value, orderStatusList) +
+                                "</span>";
+                    return html;
+                }
+            }, {
+                field: 'id',
+                title: "操作",
+                formatter: function (value, row, index) {
+                    var html =
+                        "<button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"getInfo('" +
+                        value + "')\">详细信息</button>";
+                        
+                    var currentStatus = row.orderStatus;
+                    if (currentStatus == "1") {
+                        var approveBtnHtml = "<button type=\"button\" class=\"btn btn-space btn-danger\" onclick=\"approveOrder('" + value + "')\">审批通过</button>";
+                        var editBtnHtml = "<button type=\"button\" class=\"btn btn-space btn-success\" onclick=\"editData('" + value + "')\">修改</button>";
+                        html += editBtnHtml + approveBtnHtml;
+                    } else if (currentStatus == "9") { // 已审核的订单可以创建生产订单或发货订单
+                        var cProduceBtnHtml = "<button type=\"button\" class=\"btn btn-space btn-warning\" onclick=\"createProductOrder('" + value + "')\">生产</button>";                        
+                        html += cProduceBtnHtml;
+                    } else if (currentStatus == "2") { // 加工中的订单可以查看生产订单
+                        var eProduceBtnHtml = "<button type=\"button\" class=\"btn btn-space btn-warning\" onclick=\"editProductOrder('" + value + "')\">查看生产单</button>";
+                        html += eProduceBtnHtml;
+                    } else if (currentStatus == "3") { // 代发货状态的订单可以发货
+                        var cSendBtnHtml = "<button type=\"button\" class=\"btn btn-space btn-info\" onclick=\"sendProduct('" + value + "')\">发货</button>";
+                        html += cSendBtnHtml;
+                    }
+                    return html;
+                }
+            }]
+        });
+    });
+
+    /**
+     * 通过状态码获取字典状态名称的方法
+     * @param {*} statuCode
+     */
+    function getDicNameByCode(statuCode, selectList) {
+        var dicList = selectList;
+        var formatStatueCode = statuCode + "";
+        var dicName = "-";
+        if (dicList !== null) {
+            // console.log("getDicNameByCode");
+            $.each(dicList, function (index, value) {
+                if (value.colName === formatStatueCode) {
+                    dicName = value.content;
+                    return dicName;
+                }
+            });
+        }
+        return dicName;
+    }
+
+
+    function delData() {
+        var data = $('#table').bootstrapTable('getSelections');
+        var ids = "";
+        $.each(data, function (index, value) {
+            ids += value.matid + ",";
+        });
+        console.log(ids);
+        if (ids != null) {
+            $.get("./materielRaw/delete?id=" + ids, function (result) {
+                if (result.code != 0) {
+                    alert(result.msg);
+                }
+                $('#table').bootstrapTable('refresh');
+            }, "json");
+        }
+    }
+
+    function editData(orderId) {
+        storage.setItem("orderId", orderId);
+        loadPage("html/order/sellOrder_edit.html");
+    }
+
+    function getInfo(orderId) {
+        storage.setItem("orderId", orderId);
+        loadPage("html/order/sellOrder_info.html");
+    }
+
+     function approveOrder(orderId) {
+        $.post("./sellOrders/approve", { sellOrdId: orderId }, function (result) {
+            if (result != null && result.code == 0) {
+                $('#table').bootstrapTable("refresh");
+            }
+        },"json");
+    }
+
+    function createProductOrder(orderId) {
+        sessionStorage.setItem("orderId", orderId);
+        // changeMenu("html/produce/produce_add.html");
+        loadPage("html/produce/produce_add.html");
+    }
+
+    function editProductOrder(orderId) {
+        // 打开生产订单列表，通过订单ID查询匹配的生产订单
+        sessionStorage.setItem("orderId", orderId);
+        loadPage("html/produce/produce_list.html");
+    }
+
+    function sendProduct(orderId) {
+        
+    }
+
+    function searchSellorderList() {
+        $('#table').bootstrapTable("refresh");
+    }
+
+    function resetHtml() {
+        // 重载页面
+        loadPage("html/order/sellOrder_list.html");
+    }
+
+</script>

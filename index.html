@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="assets/img/logo-fav.png">
+    <title>基金大额交易分析</title>
+    <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-table.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lib/jqvmap/jqvmap.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lib/bootstrap-slider/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" />
+    <link rel="stylesheet" type="text/css" href="assets/lib/select2/css/select2.min.css">
+    <!-- <link href="/assets/css/fontawesome/fontawesome-all.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="assets/lib/dropzone/dist/dropzone.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
+</head>
+
+<body>
+    <div class="be-wrapper be-fixed-sidebar">
+        <nav class="navbar navbar-expand fixed-top be-top-header">
+            <div class="container-fluid">
+                <div class="be-navbar-header">
+                    <a href="index.html" class="navbar-brand"></a>
+                </div>
+                <div class="be-right-navbar">
+                    <div class="page-title">
+                        <span>基金大额交易分析</span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div class="north-content">
+            <div class="margin-top-common container">
+                <div id="item-root" class="row justify-content-md-center">
+                    <p class="text-center">
+                        <button id="btn-start" class="btn btn-rounded btn-space btn-primary btn-lg">基金大额交易分析</button>
+                    </p>
+                </div>
+                <div id="item-1-1-root" class="row justify-content-md-center margin-top-line" style="display:none">
+                    <div id="item-1-1" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-1-1" onclick="connectItem('item-root', 'item-1-1', true)" type="radio" name="radio-inline" class="custom-control-input"><span
+                                class="custom-control-label">巨额赎回</span>
+                        </label>
+                    </div>
+                    <div class="col-md-auto">
+                        <p class="empty-holder"></p>
+                    </div>
+                    <div id="item-1-2" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-1-2" onclick="connectItem('item-root', 'item-1-2', true)" type="radio" name="radio-inline"
+                                class="custom-control-input"><span class="custom-control-label">超额申购</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
+    <script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
+    <script src="assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <script src="assets/js/app.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/jquery.flot.time.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/jquery.flot.resize.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/plugins/jquery.flot.orderBars.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/plugins/curvedLines.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-flot/plugins/jquery.flot.tooltip.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery.sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+    <script src="assets/lib/countup/countUp.min.js" type="text/javascript"></script>
+    <script src="assets/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
+    <script src="assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
+    <script src="assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
+
+    <script src="assets/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
+    <script src="assets/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
+    <script src="assets/lib/parsley/parsley.min.js" type="text/javascript"></script>
+    <script src="plugins/jquery.form.min.js" type="text/javascript"></script>
+
+    <script src="plugins/bootstrap-table.min.js"></script>
+    <script src="plugins/bootstrap-table-zh-CN.min.js"></script>
+    <script src="assets/lib/dropzone/dist/dropzone.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsplumb@2.8.0/dist/js/jsplumb.min.js"></script>
+
+    <script type="text/javascript">
+        var jsPlumbPara;
+
+        $(document).ready(function () {
+            initJsplumb();
+
+            $("#btn-start").click(function () {
+                console.log("Let`s start!");
+                $("#item-1-1-root").show("fast");
+            });
+
+
+        });
+
+        function initJsplumb() {
+            jsPlumb.ready(function () {
+                jsPlumbPara = {
+                    connector: ['Flowchart'],
+                    anchor: ['Bottom', 'Top'],
+                    endpoint: 'Dot'
+                }
+            });
+        }
+
+        /**
+        * 设置连接两个节点的方法
+        *
+        */
+        function connectItem(source, target, isDelete) {
+            if (isDelete) {
+                jsPlumb.deleteConnectionsForElement(source);
+            }
+
+            jsPlumb.connect({
+                source: source,
+                target: target
+            }, jsPlumbPara);
+        }
+    </script>
+</body>
+
+</html>

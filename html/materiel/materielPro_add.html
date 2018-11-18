@@ -1,0 +1,485 @@
+<head>
+    <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
+</head>
+<meta charset="UTF-8" />
+<div class="main-content container-fluid">
+    <form action="materielPro/add" method="post" id="defaultForm">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-border-color card-border-color-primary">
+                    <div class="card-header card-header-divider">
+                        成品基本信息
+                        <!-- <span class="card-subtitle">These are the basic bootstrap form elements</span> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label for="name" class="col-12 col-sm-3 col-form-label text-sm-right">物料名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="name" name="name" type="text" placeholder="请输入物料名称" class="form-control" data-parsley-error-message="物料名称不能空缺"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="internalId" class="col-12 col-sm-3 col-form-label text-sm-right">内部编号</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="internalId" name="internalId" type="text" placeholder="请输入内部编号" class="form-control" data-parsley-error-message="内部编号不能空缺"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="sampleName" class="col-12 col-sm-3 col-form-label text-sm-right">主料名称</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="sampleName" name="sampleName" type="text" placeholder="请输入主料名称" class="form-control" data-parsley-error-message="主料名称不能空缺"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="curtainWidth" class="col-12 col-sm-3 col-form-label text-sm-right">宽度</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="curtainWidth" name="curtainWidth" data-parsley-trigger="input" data-parsley-type="number" step="0.1" data-parsley-error-message="只能输入位数为1位的小数"
+                                    placeholder="输入窗帘宽度0.0" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="curtainHeight" class="col-12 col-sm-3 col-form-label text-sm-right">高度</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="curtainHeight" name="curtainHeight" data-parsley-trigger="input" data-parsley-type="number" step="0.1" data-parsley-error-message="只能输入位数为1位的小数"
+                                    placeholder="输入窗帘高度0.0" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="remarks" class="col-12 col-sm-3 col-form-label text-sm-right">加工方式</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <textarea id="remarks" form="defaultForm" name="remarks" class="form-control" placeholder="请输入加工方式" data-parsley-error-message="加工方式不能空缺"
+                                    required></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--Responsive table-->
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-header">成品构成信息
+                        <div class="tools dropdown margin-lr-12">
+                            <button type="button" class="btn btn-space btn-success" data-toggle="modal" data-target="#addMaterialModal" data-whatever="add">新增材料
+                            </button>
+                            <button type="button" class="btn btn-space btn-danger" onclick="deleteRows()">删除材料
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive noSwipe">
+                            <table id="materialTable" class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width:5%;">
+                                            <label class="custom-control custom-control-sm custom-checkbox">
+                                                <input type="checkbox" id="all_checkbox" class="custom-control-input" onchange="toggleCheckbox(this)">
+                                                <span class="custom-control-label"></span>
+                                            </label>
+                                        </th>
+                                        <th style="width:15%;">ID</th>
+                                        <th style="width:15%;">名称</th>
+                                        <th style="width:15%;">内部编号</th>
+                                        <th style="width:10%;">加工方式</th>
+                                        <th style="width:10%;">数量</th>
+                                        <th style="width:10%;">单位</th>
+                                        <th style="width:10%;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row border-top-gray justify-content-md-center">
+                            <div class="col-md-4 layout-center line-center">
+                                <p class="margin-top-bottom-common">
+                                    <button class="btn btn-primary btn-lg" type="submit" id="submitBtn">提 交
+                                    </button>
+                                    <button class="btn btn-secondary btn-lg" type="button" id="_cancel" onclick="loadPage('html/materiel/materielPro_list.html')">取 消
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- Modal -->
+<div id="addMaterialModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="addMaterialModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header ns-modal-header">
+                <h4 class="modal-title" id="addMaterialModalLabel">添加材料</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Alerts -->
+                <div id="insertSuccess" role="alert" class="alert alert-success alert-dismissible">
+                    <button type="button" aria-label="Close" class="close" onclick="hideAlert('insertSuccess')">
+                        <span aria-hidden="true" class="mdi mdi-close"></span>
+                    </button>
+                    <div class="icon">
+                        <span class="mdi mdi-check"></span>
+                    </div>
+                    <div class="message">
+                        <strong>添加成功!</strong> 可以继续添加其他材料。</div>
+                </div>
+                <form>
+                    <div class="form-group row">
+                        <label for="selectMaterial" class="col-12 col-sm-3 col-form-label text-sm-right">请选择材料：</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <select id="selectMaterial" name="selectMaterial" class="select2 select2-hidden-accessible form-control" data-width="100%"
+                                tabindex="-1" aria-hidden="true" required>
+                                <option value="">无</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="matIdModal" class="col-12 col-sm-3 col-form-label text-sm-right">物料ID：</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <input id="matIdModal" type="text" readonly="readonly" name="matIdModal" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="internalIdModal" class="col-12 col-sm-3 col-form-label text-sm-right">物料内部编号：</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <input id="internalIdModal" type="text" readonly="readonly" name="internalId" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="rawName" class="col-12 col-sm-3 col-form-label text-sm-right">物料名称：</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <input id="rawName" type="text" readonly="readonly" name="rawName" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="inputNum" class="col-12 col-sm-3 col-form-label text-sm-right">数量：</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <input id="inputNum" data-parsley-trigger="input" data-parsley-type="number" data-parsley-error-message="只能输入整数" name="rawName"
+                                class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="selectMacthStyle" class="col-12 col-sm-3 col-form-label text-sm-right">加工方式：</label>
+                        <div class="col-12 col-sm-8 col-lg-6">
+                            <select id="selectMacthStyle" name="selectMacthStyle" class="select2 select2-hidden-accessible form-control" data-width="100%"
+                                tabindex="-1" aria-hidden="true" required>
+                                <option value="-1">无</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="insertBtn" type="button" class="btn btn-primary" onclick="insertAction()"></button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<script>
+    // 变量表示操作是否为修改
+    var isEdit = false;
+
+    $(document).ready(function () {
+        App.tableFilters();
+        // Default is hidden in the modal alert
+        hideAlert('insertSuccess');
+        // 重新指定select2的父容器
+        $("#selectMaterial").select2({
+            dropdownParent: $("#addMaterialModal")
+        });
+        $("#selectMacthStyle").select2({
+            dropdownParent: $("#addMaterialModal")
+        });
+        // 初始化加工方式列表
+        selectInit("selectMacthStyle", "machStyle", null);
+        // 初始化材料选择列表
+        $.get("./materielRaw/getVisibleData/", function (result) {
+            // console.log("result:" + result.code);
+            if (result != null && result.data != null) {
+                // 初始化原料选择view
+                var materialRawViewList = result.data;
+                materialRawViewList.forEach(function showData(value, index) {
+                    $("#selectMaterial").append("<option value='" + value.matid + "'>" + value.internalId +
+                        "/" + value.name + "</option>");
+                });
+            }
+        }, "json");
+
+        // 模糊动态框监控事件
+        $('#addMaterialModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            if (recipient === "add") {
+                isEdit = false;
+                $('#insertBtn').text("添加");
+                $('#selectMacthStyle').val('-1').trigger('change');
+            } else {
+                isEdit = true;
+                $('#insertBtn').text("更新");
+            }
+            if ($('#matIdModal').val() != null && recipient === "add") {
+                resetModal();
+            }
+        });
+        // select2的选中事件
+        $('#selectMaterial').on('select2:select', function (e) {
+            // Default is hidden in the modal alert
+            hideAlert('insertSuccess');
+
+            var data = e.params.data;
+            // console.log(data);
+            $('#matIdModal').val(data.id);
+            var textStr = new Array();
+            textStr = data.text.split("/");
+            var interId = textStr[0];
+            var name = textStr[1];
+            $('#internalIdModal').val(interId);
+            $('#rawName').val(name);
+            // 设置焦点在数量input上
+            $('#inputNum').val("");
+            $('#inputNum').focus();
+        });
+        // var ajax_option = {
+        //     beforeSubmit: showRequest,  //提交前的回调函数    
+        //     success: showResponse,      //提交后的回调函数    
+        // };
+        $('form').parsley();
+        $('#defaultForm').ajaxForm(function (result) {
+            if (result != null && result.code == 0) {
+                $("#_cancel").click();
+            }
+        }, "json");
+        // $('#defaultForm').ajaxForm(ajax_option);
+    });
+
+    function insertAction() {
+        if (isEdit) {
+            var row = sessionStorage.getItem("key_row");
+            var index = sessionStorage.getItem("key_index");
+            updateMaterial(row, index);
+        } else {
+            insertMaterial();
+        }
+    }
+
+    function updateMaterial(row, index) {
+        var id = $('#matIdModal').val();
+        if ($('#inputNum').parsley().isValid()) {
+            var count = formatNumber($("#inputNum").val(), -1);
+            $('#inputNum').val(count);
+            if (id != null) {
+                $.get("./materielRaw/" + id, function (result) {
+                    // console.log("result:" + result.data.name);
+                    if (result != null && result.data != null) {
+                        var matrialRawViewBean = result.data;
+                        var data = $('#selectMacthStyle').select2('data')
+                        var machStyleStr = String(data[0].text);
+                        var machStyle = data[0].id;
+                        updateTr(
+                            row,
+                            index,
+                            matrialRawViewBean.matid,
+                            matrialRawViewBean.name,
+                            matrialRawViewBean.internalId,
+                            count,
+                            matrialRawViewBean.unit,
+                            machStyleStr,
+                            machStyle
+                        );
+                    }
+                }, "json");
+            }
+        }
+    }
+
+    function updateTr(row, index, id, name, innerId, total, unit, machStyleStr, machStyle) {
+        var newHtml =
+            "<td><label class=\"custom-control custom-control-sm custom-checkbox\"><input type=\"checkbox\" name=\"structIds\" value='" +
+            index + "' class=\"custom-control-input\">" +
+            "<span class=\"custom-control-label\"></span></label></td>" +
+            "<td><span>" + id + "</span><input type='hidden' name='structList[" + index + "].rawid' value='" + id +
+            "'></td>" +
+            "<td><span>" + name + "</span></td>" +
+            "<td><span>" + innerId + "</span></td>" +
+            "<td><span>" + machStyleStr + "</span><input type='hidden' name='structList[" + index + "].machStyle' value='" + machStyle + "'></td>" +
+            "<td><span>" + total + "</span><input type='hidden' name='structList[" + index + "].total' value='" + total +
+            "'></td>" +
+            "<td><span>" + unit + "</span></td>" +
+            "<td><button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"editMaterial(this)\">修改</button></td>";
+
+        $("#materialTable tr:eq(" + row + ")").html(newHtml);
+        // console.log("newHtml:" + newHtml.toString());
+        // 更新成功关闭Modal
+        $("#addMaterialModal").modal('hide');
+    }
+
+    function insertMaterial() {
+        var id = $('#matIdModal').val();
+        if ($('#inputNum').parsley().isValid()) {
+            var count = formatNumber($("#inputNum").val(), -1);
+            $('#inputNum').val(count);
+            if (id != null) {
+                $.get("./materielRaw/" + id, function (result) {
+                    // console.log("result:" + result.data.name);
+                    if (result != null && result.data != null) {
+                        var matrialRawViewBean = result.data;
+                        // var machStyle = $('#selectMacthStyle').val();
+                        var data = $('#selectMacthStyle').select2('data')
+                        var machStyleStr = String(data[0].text);
+                        var machStyle = data[0].id;
+                        // console.log("machStyle:" + result.data.name);
+                        createTr(matrialRawViewBean.matid,
+                            matrialRawViewBean.name,
+                            matrialRawViewBean.internalId,
+                            count,
+                            matrialRawViewBean.unit,
+                            machStyle,
+                            machStyleStr
+                        );
+                    }
+                }, "json");
+            }
+        }
+    }
+
+
+    var structListIndex = 0;
+
+    function createTr(id, name, innerId, total, unit, machStyle, machStyleStr) {
+        // show alert view
+        showAlert('insertSuccess');
+        var htmlStr = "<tr id='structId" + structListIndex +
+            "' class=\"online\"><td><label class=\"custom-control custom-control-sm custom-checkbox\"><input type=\"checkbox\" name=\"structIds\" value='" +
+            structListIndex + "' class=\"custom-control-input\">" +
+            "<span class=\"custom-control-label\"></span></label></td>" +
+            "<td><span>" + id + "</span><input type='hidden' name='structList[" + structListIndex + "].rawid' value='" +
+            id + "'></td>" +
+            "<td><span>" + name + "</span></td>" +
+            "<td><span>" + innerId + "</span></td>" + 
+            "<td><span>" + machStyleStr + "</span><input type='hidden' name='structList[" + structListIndex + "].machStyle' value='" + machStyle + "'></td>" +
+            "<td><span>" + total + "</span><input type='hidden' name='structList[" + structListIndex +
+            "].total' value='" + total + "'></td>" +
+            "<td><span>" + unit + "</span></td>" +
+            "<td><button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"editMaterial(this)\">修改</button></td></tr>";
+        $("#materialTable tr:last").after(htmlStr);
+        structListIndex++;
+    }
+
+    /**
+     * 修改表中某行的输入值
+     */
+    function editMaterial(btn) {
+        var row = $(btn).closest("tr").index();
+        var rowId = $(btn).closest("tr").attr('id');
+        var actionIndex = getActionIndex(rowId);
+        // 将操作行数保存在窗口的公用变量上
+        sessionStorage.setItem("key_row", row);
+        sessionStorage.setItem("key_index", actionIndex);
+
+        // console.log("row:" + row);
+        // console.log("rowId:" + rowId);
+        // console.log("actionIndex:" + actionIndex);
+        var id = $("#materialTable tr:eq(" + row + ") td:eq(1)").text();
+        var name = $("#materialTable tr:eq(" + row + ") td:eq(2)").text();
+        var innerId = $("#materialTable tr:eq(" + row + ") td:eq(3)").text();
+        var machStyle = $("#materialTable tr:eq(" + row + ") td:eq(4)").find('input').val();
+        // console.log("machStyle:" + machStyle);
+        var num = $("#materialTable tr:eq(" + row + ") td:eq(5)").text();
+
+        $('#selectMaterial').val(id).trigger('change');
+        $('#matIdModal').val(id);
+        $('#internalIdModal').val(innerId);
+        $('#rawName').val(name);
+        $('#inputNum').val(num);
+        $('#selectMacthStyle').val(machStyle).trigger('change');
+        // Default is hidden in the modal alert
+        hideAlert('insertSuccess');
+        $("#addMaterialModal").modal('show');
+    }
+
+    function getActionIndex(rowId) {
+        var str = rowId.toString();
+        return str.substring(8, str.length);
+    }
+
+
+
+    function toggleCheckbox(allCheckbox) {
+        var status = allCheckbox.checked;
+        // Status is true reprents that all of the checkbox`s checked status is true. 
+        $("[name='structIds']").each(function (index, element) {
+            element.checked = status;
+        });
+    }
+
+    function deleteRows() {
+        // 改变全选checkbox状态的方法
+        var status = $('#all_checkbox').is(":checked");
+        if (status) {
+            $('#all_checkbox').prop("checked", false);
+        }
+
+        $("[name='structIds']:checked").each(function (index, element) {
+            var idIndex = $(this).val();
+            $("#structId" + idIndex).remove();
+        });
+    }
+
+    function resetModal() {
+        // Default is hidden in the modal alert
+        hideAlert('insertSuccess');
+
+        $('#matIdModal').val("");
+        $('#internalIdModal').val("");
+        $('#rawName').val("");
+        $('#inputNum').val("");
+    }
+
+    function showRequest(formData, jqForm, options) {
+        // formData is an array; here we use $.param to convert it to a string to display it 
+        // but the form plugin does this for you automatically when it submits the data 
+        var queryString = $.param(formData);
+
+        // jqForm is a jQuery object encapsulating the form element.  To access the 
+        // DOM element for the form do this: 
+        // var formElement = jqForm[0]; 
+
+        alert('About to submit: \n\n' + queryString);
+
+        // here we could return false to prevent the form from being submitted; 
+        // returning anything other than false will allow the form submit to continue 
+        return true;
+    }
+
+    // post-submit callback 
+    function showResponse(responseText, statusText, xhr, $form) {
+        // for normal html responses, the first argument to the success callback 
+        // is the XMLHttpRequest object's responseText property 
+
+        // if the ajaxForm method was passed an Options Object with the dataType 
+        // property set to 'xml' then the first argument to the success callback 
+        // is the XMLHttpRequest object's responseXML property 
+
+        // if the ajaxForm method was passed an Options Object with the dataType 
+        // property set to 'json' then the first argument to the success callback 
+        // is the json data object returned by the server 
+
+        alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+            '\n\nThe output div should have already been updated with the responseText.');
+    }
+</script>

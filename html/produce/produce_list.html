@@ -1,0 +1,267 @@
+<head>
+    <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
+</head>
+<meta charset="UTF-8" />
+<div class="main-content container-fluid">
+    <div class="row padding-lr-common">
+        <div class="col-md-12  border-top-color  border-bottom-color bg-white">
+            <div class="row padding-lr-common">
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">查询条件</span>
+                    <div class="filter-container">
+                        <label for="input_name">查询加工商关键字:</label>
+                        <input id="input_name" class="common-text-view max-length" placeholder="输入查询关键字">
+                    </div>
+                </div>
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">生产订单状态</span>
+                    <div class="filter-container">
+                        <label for="prodStatus" class="control-label">选择订单状态:</label>
+                        <form>
+                            <select id="prodStatus" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                <option value="">未选择</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                        <span class="table-filter-title">账款状态</span>
+                        <div class="filter-container">
+                            <label for="moneyStatus" class="control-label">选择账款状态:</label>
+                            <form>
+                                <select id="moneyStatus" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                                    <option value="">未选择</option>
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            <div class="row padding-lr-common">
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">加工日期</span>
+                    <div class="filter-container">
+                        <form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="sProduceDate" class="control-label">起始:</label>
+                                    <input id="sProduceDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control form-control-sm datetimepicker">
+                                </div>
+                                <div class="col-6">
+                                    <label for="eProduceDate" class="control-label">至:</label>
+                                    <input id="eProduceDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control form-control-sm datetimepicker">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-4 table-filters pb-0 pb-xl-4">
+                    <span class="table-filter-title">加工完成日期</span>
+                    <div class="filter-container">
+                        <form>
+                            <div class="row">
+                                <div class="col-6">
+                                    <label for="sDoneDate" class="control-label">起始:</label>
+                                    <input id="sDoneDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control form-control-sm datetimepicker">
+                                </div>
+                                <div class="col-6">
+                                    <label for="eDoneDate" class="control-label">至:</label>
+                                    <input id="eDoneDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control form-control-sm datetimepicker">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row padding-common">
+                <p class="line-center">
+                    <button type="button" class="btn btn-space btn-primary common-btn" onclick="searchProdList()">搜索</button>
+                    <button class="btn btn-space btn-secondary common-btn" onclick="resetHtml()">重置</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row space-margin-top">
+        <div class="col-md-12">
+            <div class="card card-table">
+                <div class="card-body margin-common">
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+        var prodStatusList = new Array();
+        var moneyStatusList = new Array();
+
+        $(document).ready(function () {
+            console.log("produce_list.html");
+            App.tableFilters();
+            $(".page-title span").text("生产订单列表");
+            // 初始化生产订单状态选择控件
+            selectInit("prodStatus", "prodOrderStatus", null, prodStatusList);
+            // 初始账款状态选择控件
+            selectInit("moneyStatus", "prodMoneyStatus", null, moneyStatusList);
+            // // 获取订单状态列表数据
+            // getDicList("prodStatus", prodStatusList);
+            // // 获取账款状态列表数据
+            // getDicList("moneyStatus", moneyStatusList);
+        });
+    
+        function searchMaterielList() {
+            $('#table').bootstrapTable("refresh");
+        }
+    
+        $(function () {
+            $('#table').bootstrapTable({
+                locale: 'zh-CN',
+                url: './produces',
+                method: 'get', //请求方式（*）
+                pagination: true, //是否分页
+                dataType: "json",
+                sidePagination: "server", //服务端处理分页
+                silentSort: false,
+                pageList: [10, 25, 50, 100],
+                pageSize: 10,
+                pageNumber: 1,
+                detailView: false,
+                /*   showColumns: true,                  //是否显示所有的列
+                   showRefresh: true,        */ //是否显示刷新按钮
+                minimumCountColumns: 2, //最少允许的列数
+                clickToSelect: true, //是否启用点击选中行
+                queryParams: function (params) {
+                    var pageNo = 0;
+                    if (params.offset == 0) {
+                        pageNo = 1;
+                    } else {
+                        pageNo = params.offset / params.limit + 1;
+                    }
+    
+                    var json = {
+                        "pageSize": params.limit,
+                        "pageNum": pageNo,
+                        "AND_EQ_prodStatus": $("#prodStatus").val(),
+                        "AND_EQ_moneyStatus": $("#moneyStatus").val(),
+                        "AND_LIKE_name": $("#input_name").val(),
+                        "AND_BETWEEN_prodStartDate": $("#sProduceDate").val() + "&" + $("#eProduceDate").val(),
+                        "AND_BETWEEN_doneDate": $("#sDoneDate").val() + "&" + $("#eDoneDate").val()
+                    };
+                    return json;
+                },
+                columns: [{
+                    checkbox: true
+                }, {
+                    field: 'id',
+                    title: '生产订单编号'
+                }, {
+                    field: 'name',
+                    title: '加工商名称'
+                }, {
+                    field: 'prodStartDate',
+                    title: '加工日期',
+                    formatter: function (value, row, index) {
+                        var html;
+                        if (value == null) {
+                            html = "<span> - </span>";
+                        } else {
+                            html = "<span>" + value + "</span>";
+                        }
+                        
+                        return html;
+                    }
+                }, {
+                    field: 'doneDate',
+                    title: '加工完成日期',
+                    formatter: function (value, row, index) {
+                        var html;
+                        if (value == null) {
+                            html = "<span> - </span>";
+                        } else {
+                            html = "<span>" + value + "</span>";
+                        }
+                        
+                        return html;
+                    }
+                }, {
+                    field: 'prodOrderStatus',
+                    title: '订单状态',
+                    formatter: function (value, row, index) {
+                        var html = "<span>" +
+                                    getDicNameByCode(value, prodStatusList) +
+                                    "</span>";
+                        return html;
+                    }
+                }, {
+                    field: 'prodMoneyStatus',
+                    title: '账款状态',
+                    formatter: function (value, row, index) {
+                        var html = "<span>" +
+                                    getDicNameByCode(value, moneyStatusList) +
+                                    "</span>";
+                        return html;
+                    }
+                }, {
+                    field: 'id',
+                    title: "操作",
+                    formatter: function (value, row, index) {
+                        var html =
+                            "<button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"getInfo('" +
+                            value + "')\">详细信息</button>";
+                            
+                        var prodStatus = row.prodOrderStatus;
+                        var moneyStatus = row.moneyStatus;
+                        if (prodStatus != "2" || moneyStatus != "1") {// 加工未完成或账款未结清，可以进一步操作生产订单
+                            var editBtnHtml = "<button type=\"button\" class=\"btn btn-space btn-danger\" onclick=\"editProd('" + value + "')\">操作</button>";
+                            html += editBtnHtml;
+                        }
+
+                        return html;
+                    }
+                }]
+            });
+        });
+    
+        /**
+         * 通过状态码获取字典状态名称的方法
+         * @param {*} statuCode
+         */
+        function getDicNameByCode(statuCode, selectList) {
+            var dicList = selectList;
+            var formatStatueCode = statuCode + "";
+            var dicName = "-";
+            if (dicList !== null) {
+                // console.log("getDicNameByCode");
+                $.each(dicList, function (index, value) {
+                    if (value.colName === formatStatueCode) {
+                        dicName = value.content;
+                        return dicName;
+                    }
+                });
+            }
+            return dicName;
+        }
+    
+        function editProd(prodId) {
+            sessionStorage.setItem("prodId", prodId);
+            sessionStorage.setItem("isEdit", true);
+            loadPage("html/produce/produce_edit.html");
+        }
+    
+        function getInfo(prodId) {
+            sessionStorage.setItem("prodId", prodId);
+            sessionStorage.setItem("isEdit", false);
+            loadPage("html/produce/produce_edit.html");
+        }
+    
+        function searchProdList() {
+            $('#table').bootstrapTable("refresh");
+        }
+    
+        function resetHtml() {
+            // 重载页面
+            loadPage("html/order/produce_list.html");
+        }
+    
+    </script>

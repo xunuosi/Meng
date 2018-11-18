@@ -1,0 +1,142 @@
+<head>
+    <link rel="stylesheet" href="../../assets/css/north.css" type="text/css" />
+</head>
+<meta charset="UTF-8" />
+<form action="/produces/update" method="post" id="defaultForm">
+    <div class="main-content container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-border-color card-border-color-primary">
+                    <div class="card-header card-header-divider">
+                        生产订单编号:
+                        <span id="produceId"></span>
+                        <input type="hidden" id="id" name="id">
+                        <input type="hidden" id="orderId" name="orderId">
+                        <input type="hidden" id="prodOrderStatus" name="prodOrderStatus">
+                        <!-- <span class="card-subtitle">These are the basic bootstrap form elements</span> -->
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="manufName" class="col-12 font-normal text-sm-left">加工商名称</label>
+                                <div class="input-group mb-3">
+                                    <input type="hidden" id="manufId" name="manufacturerId">
+                                    <input type="text" id="manufName" class="form-control" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="prodSDate" class="col-12 font-normal text-sm-left">加工日期:</label>
+                                <input id="prodSDate" name="prodStartDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control datetimepicker"
+                                    data-parsley-error-message="加工日期日期不能为空">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="prodEDate" class="col-12 font-normal text-sm-left">收货日期:</label>
+                                <input id="prodEDate" name="doneDate" type="text" data-min-view="2" data-date-format="yyyy-mm-dd" class="form-control datetimepicker">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="prodAddress" class="col-12 font-normal text-sm-left">加工厂地址</label>
+                                <input type="text" id="prodAddress" class="form-control" readonly="readonly">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--Responsive table-->
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        加工订单详情
+                        <div class="layout-right">
+                            <span id="displayOrderId">关联订单编号:</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="padding-lr-common border-bottom-color">
+                            <table id="prodInfoTab" class="table table-hover">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!--Responsive table-->
+            <div class="col-sm-12">
+                <div class="card card-table">
+                    <div class="card-header">
+                        加工订单统计信息
+                    </div>
+                    <div class="card-body">
+                        <div class="padding-lr-common border-bottom-color">
+                            <table id="totalInfoTab" class="table table-hover">
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="row padding-common">
+                <div class="col-md-2">
+                    <input type="text" id="processingCost" value="0.0" name="processingCost" class="form-control" placeholder="请输入加工费用"
+                        data-parsley-type="number" data-parsley-error-message="只能输入两位小数" required>
+                </div>
+                <button id="payBtn" class="btn btn-secondary btn-lg" type="button" onclick="payMachFee(this)">
+                                支付加工费
+                </button>
+                <input type="hidden" id="prodMoneyStatus" name="prodMoneyStatus">
+            </div>
+        </div>
+        <div class="card">
+            <div class="row justify-content-md-center">
+                <div class="col-md-4 layout-center line-center">
+                    <p class="margin-top-bottom-common">
+                        <button class="btn btn-secondary btn-lg" type="button">
+                            打印
+                        </button>
+                        <button id="confirmEdit" class="btn btn-success btn-lg" type="button" onclick="formSubmit()">
+                            确认修改
+                        </button>
+                        <button class="btn btn-danger btn-lg" type="button" id="_cancel" onclick="cancelSubmit()">
+                            取 消
+                        </button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="showPicModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="showPicModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header ns-modal-header">
+                <h4 class="modal-title" id="showPicModalLabel">加工样品图</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="myDropzone" class="dropzone">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script src="../../assets/js/produce/produce_edit.js" type="text/javascript"></script>

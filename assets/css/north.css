@@ -1,0 +1,38 @@
+.north-content {
+    position: relative;
+    min-height: 100%;
+}
+
+.margin-top-common {
+    margin-top: 2rem;
+}
+
+.margin-top-line {
+    margin-top: 5rem;
+}
+
+.layout-lr-center {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.width-all {
+    width: 100%;
+}
+
+.item-filters {
+    border: 1px solid #e6e5e5;
+}
+
+.item {
+    background: white;
+}
+
+.margin-reset {
+    margin: 0.923rem;
+}
+
+.empty-holder {
+    margin-left: 2rem;
+    margin-right: 2rem;
+}

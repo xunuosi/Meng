@@ -1,0 +1,111 @@
+<meta charset="UTF-8"/>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">入库列表</span></div>
+                <div class="card-body">
+                    <div class="filter-container" id="searchDiv">
+                        <label for="input_code">编号：</label>
+                        <input id="input_code" class="common-text-view max-length" placeholder="输入查询编号">
+                        <label for="input_name">名称：</label>
+                        <input id="input_name" class="common-text-view max-length" placeholder="输入查询名称">
+                    </div>
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="toolbar">
+    <button type="button" class="btn btn-space btn-primary common-btn" onclick="searchStockList()">搜索
+    </button>
+    <button class="btn btn-space btn-secondary common-btn" onclick="resetHtml()">重置</button>
+    <button type="button" class="btn btn-space btn-success" onclick="loadPage('./html/stock/main.html')">返回仓库明细
+    </button>
+</div>
+<script>
+
+    $(function () {
+        var internalId = storage.getItem("internalId");
+        var detailFromMain = false;
+        if (null != internalId && "" != internalId) {
+            detailFromMain = true;
+            $("#searchDiv").hide();
+        }
+        $("#input_code").val(internalId);
+        storage.removeItem("internalId");
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            url: './stock/entry/list',
+            method: 'get',                      //请求方式（*）
+            pagination: true,  //是否分页
+            dataType: "json",
+            sidePagination: "server", //服务端处理分页
+            silentSort: false,
+            pageList: [10, 25, 50, 100],
+            pageSize: 10,
+            pageNumber: 1,
+            detailView: false,
+            /*   showColumns: true,                  //是否显示所有的列
+               showRefresh: true,        */          //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            toolbar: '#toolbar',
+            clickToSelect: true,                //是否启用点击选中行
+            queryParams: function (params) {
+                var pageNo = 0;
+                if (params.offset == 0) {
+                    pageNo = 1;
+                } else {
+                    pageNo = params.offset / params.limit + 1;
+                }
+
+                var json = {
+                    "pageSize": params.limit,
+                    "pageNum": pageNo,
+                    "AND_LIKE_internalId": $("#input_code").val(),
+                    "AND_LIKE_name": $("#input_name").val()
+
+                };
+                if (detailFromMain) {
+                    delete json['AND_LIKE_internalId'];
+                    json['AND_EQ_internalId'] = $("#input_code").val();
+                }
+                return json;
+            },
+            columns: [{
+                field: 'internalId',
+                title: '编码'
+            }, {
+                field: 'name',
+                title: '原材料名称'
+            }, {
+                field: 'incomingNum',
+                title: '入库数量'
+            }, {
+                field: 'stockPosition',
+                title: '入库位置'
+            }, {
+                field: 'incomingDate',
+                title: '入库时间'
+            }, {
+                field: 'account',
+                title: '入库人员'
+            }]
+        });
+    });
+
+    function searchStockList() {
+        $('#table').bootstrapTable("refresh");
+    }
+
+    function resetHtml() {
+        // 重载页面
+        loadPage("html/stock/main.html");
+    }
+
+
+
+</script>

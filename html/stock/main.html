@@ -1,0 +1,112 @@
+<meta charset="UTF-8"/>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">库存列表</span></div>
+                <div class="card-body">
+                    <div class="filter-container">
+                        <label for="input_code">编号：</label>
+                        <input id="input_code" class="common-text-view max-length" placeholder="输入查询编号">
+                        <label for="input_name">名称：</label>
+                        <input id="input_name" class="common-text-view max-length" placeholder="输入查询名称">
+                    </div>
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="toolbar">
+    <button type="button" class="btn btn-space btn-primary common-btn" onclick="searchSellorderList()">搜索
+    </button>
+    <button class="btn btn-space btn-secondary common-btn" onclick="resetHtml()">重置</button>
+    <button type="button" class="btn btn-space btn-success" onclick="loadPage('./html/stock/stock_entry.html')">入库
+    </button>
+    <button type="button" class="btn btn-space btn-danger" onclick="loadPage('./html/stock/stock_delivery.html')">出库
+    </button>
+</div>
+<script>
+
+    $(function () {
+
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            url: './stock/list',
+            method: 'get',                      //请求方式（*）
+            pagination: true,  //是否分页
+            dataType: "json",
+            sidePagination: "server", //服务端处理分页
+            silentSort: false,
+            pageList: [10, 25, 50, 100],
+            pageSize: 10,
+            pageNumber: 1,
+            detailView: false,
+            /*   showColumns: true,                  //是否显示所有的列
+               showRefresh: true,        */          //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            toolbar: '#toolbar',
+            clickToSelect: true,                //是否启用点击选中行
+            queryParams: function (params) {
+                var pageNo = 0;
+                if (params.offset == 0) {
+                    pageNo = 1;
+                } else {
+                    pageNo = params.offset / params.limit + 1;
+                }
+
+                var json = {
+                    "pageSize": params.limit,
+                    "pageNum": pageNo,
+                    "AND_LIKE_internalId": $("#input_code").val(),
+                    "AND_LIKE_name": $("#input_name").val()
+                };
+                return json;
+            },
+            columns: [{
+                field: 'internalId',
+                title: '编码'
+            }, {
+                field: 'name',
+                title: '原材料名称'
+            }, {
+                field: 'stockNum',
+                title: '库存数量'
+            }, {
+                field: 'stockPosition',
+                title: '库存位置'
+            }, {
+                field: 'operationDate',
+                title: '最后操作时间'
+            }, {
+                field: 'id', title: "操作", formatter: function (value, row, index) {
+                    var html = "<button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"entryDetail('" + row.internalId + "')\">入库详情</button>";
+                    html += "<button type=\"button\" class=\"btn btn-space btn-danger\" onclick=\"deliveryDetail('" + row.internalId + "')\">出库详情</button>";
+                    return html;
+                }
+            }]
+        });
+    });
+
+    function searchSellorderList() {
+        $('#table').bootstrapTable("refresh");
+    }
+
+    function resetHtml() {
+        // 重载页面
+        loadPage("html/stock/main.html");
+    }
+
+
+    function entryDetail(internalId) {
+        storage.setItem("internalId", internalId);
+        loadPage("html/stock/entryList.html");
+    }
+
+    function deliveryDetail(internalId) {
+        storage.setItem("internalId", internalId);
+        loadPage("html/stock/deliveryList.html");
+    }
+</script>

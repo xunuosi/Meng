@@ -1,0 +1,172 @@
+<head>
+    <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
+</head>
+<meta charset="UTF-8" />
+<div class="main-content container-fluid">
+    <div class="row padding-lr-common">
+        <div class="col-md-12  border-top-color  border-bottom-color bg-white">
+            <div class="row padding-lr-common">
+                <div class="col-md-4">
+                    <label for="input_num" class="right-center-label">物料内部编号:</label>
+                    <input id="input_num" class="common-text-view max-length" placeholder="输入物料内部编号">
+                </div>
+                <div class="col-md-4">
+                    <label for="input_name" class="right-center-label">原材料名称:</label>
+                    <input id="input_name" class="common-text-view max-length" placeholder="输入物料名称">
+                </div>
+                <div class="col-md-4">
+                    <label for="clothing_type" class="right-center-label">布料规格类型:</label>
+                    <select id="clothing_type" class="select2 select2-hidden-accessible max-length" tabindex="-1" aria-hidden="true">
+                        <option value="">未选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row padding-lr-common">
+                <div class="col-md-4">
+                    <label for="supplier_name" class="right-center-label">原材料供应商:</label>
+                    <select id="supplier_name" class="select2 select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+                        <option value="">未选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row padding-common">
+                <p class="line-center">
+                    <button type="button" class="btn btn-space btn-primary common-btn" onclick="searchMaterielList()">搜索</button>
+                    <button class="btn btn-space btn-secondary common-btn" onclick="resetHtml()">重置</button>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row space-margin-top">
+        <div class="col-md-12">
+            <div class="card card-table">
+                <div class="card-body margin-common">
+                    <table id="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        App.tableFilters();
+        $(".page-title span").text("原材料入库");
+        // 默认不限制类型
+        selectInit("clothing_type", "clothDirectionType", null);
+        initSelectByTableName("suppliers", "supplier_name", null);
+    });
+
+    function resetHtml() {
+        // 重载页面
+        loadPage("html/stock/stock_entry.html");
+    }
+
+    function searchMaterielList() {
+        $('#table').bootstrapTable("refresh");
+    }
+
+    $(function () {
+        $('#table').bootstrapTable({
+            locale: 'zh-CN',
+            url: './materielRaw',
+            method: 'get', //请求方式（*）
+            pagination: true, //是否分页
+            dataType: "json",
+            sidePagination: "server", //服务端处理分页
+            silentSort: false,
+            pageList: [10, 25, 50, 100],
+            pageSize: 10,
+            pageNumber: 1,
+            detailView: false,
+            /*   showColumns: true,                  //是否显示所有的列
+               showRefresh: true,        */ //是否显示刷新按钮
+            minimumCountColumns: 2, //最少允许的列数
+            clickToSelect: true, //是否启用点击选中行
+            singleSelect: true,
+            queryParams: function (params) {
+                var pageNo = 0;
+                if (params.offset == 0) {
+                    pageNo = 1;
+                } else {
+                    pageNo = params.offset / params.limit + 1;
+                }
+
+                var json = {
+                    "pageSize": params.limit,
+                    "pageNum": pageNo,
+                    "AND_EQ_internalId": $("#input_num").val(),
+                    "AND_LIKE_name": $("#input_name").val(),
+                    "AND_EQ_directionType": $("#clothing_type").val(),
+                    "AND_EQ_supid": $("#supplier_name").val(),
+                };
+                return json;
+            },
+            columns: [ {
+                field: 'internalId',
+                title: '物料内部编号'
+            }, {
+                field: 'name',
+                title: '物料名称'
+            }, {
+                field: 'clothTypeName',
+                title: '布料规格类型'
+            }, {
+                field: 'total',
+                title: '入库数量',
+                formatter: function (value, row, index) {
+                    var id = "entry" + index;
+                    var html =
+                        "<input type='number' min='1' id='"+id+"' value='0'/>";
+                    return html;
+                }
+            },{
+                field: 'position',
+                title: '位置',
+                formatter: function (value, row, index) {
+                    var id = "position" + index;
+                    var html =
+                        "<input  maxlength='255' id='"+id+"'/>";
+                    return html;
+                }
+            }, {
+                field: 'matid',
+                title: "操作",
+                formatter: function (value, row, index) {
+                    var html =
+                        "<button type=\"button\" class=\"btn btn-space btn-primary\" onclick=\"entryToStock(" +
+                        index + ")\">入库</button>";
+                    return html;
+                }
+            }]
+        });
+    });
+
+    function entryToStock(index) {
+        var rows = $('#table').bootstrapTable('getData');
+        var obj = rows[index];
+        var total = $("#entry" + index).val();
+        var position = $("#position" + index).val();
+        var json = {
+            "matid": obj.matid,
+            "stockPosition": position,
+            "incomingNum": total,
+            "incomingType":"2"
+        };
+        add2Stock(json);
+    }
+
+
+    function add2Stock(params) {
+        $.post("./stock/entry", params, function (result) {
+            if (result.code == 0) {
+                resetHtml();
+            }else {
+                alert("发生系统错误！请联系管理员！")
+            }
+        },"json");
+    }
+
+</script>

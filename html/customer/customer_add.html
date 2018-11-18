@@ -1,0 +1,77 @@
+<meta charset="UTF-8"/>
+<div class="main-content container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-border-color card-border-color-primary">
+                <div class="card-header card-header-divider">新增客户</span>
+                </div>
+                <div class="card-body">
+                    <form action="customers/add" method="post" id="defaultForm">
+                        <input id="uuid" type="hidden" name="uuid" class="form-control" required>
+                        <div class="form-group row">
+                            <label for="name" class="col-12 col-sm-3 col-form-label text-sm-right">客户姓名：</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="name" type="text" name="name" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="accountPlatform" class="col-12 col-sm-3 col-form-label text-sm-right">平台ID：</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="accountPlatform" type="text" name="accountPlatform" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="type" class="col-12 col-sm-3 col-form-label text-sm-right">客户类型：</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <select id="type" name="type" class="form-control">
+                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-12 col-sm-3 col-form-label text-sm-right">客户地址：</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="address" type="text" name="address" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="tel" class="col-12 col-sm-3 col-form-label text-sm-right">客户电话：</label>
+                            <div class="col-12 col-sm-8 col-lg-6">
+                                <input id="tel" type="text" placeholder="(010)-99999999" maxlength="20" name="tel" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                                <label for="originPlatform" class="col-12 col-sm-3 col-form-label text-sm-right">来源平台：</label>
+                                <div class="col-12 col-sm-8 col-lg-6">
+                                    <input id="originPlatform" type="text" name="originPlatform" class="form-control">
+                                </div>
+                            </div>
+                        <div class="row pt-0 pt-sm-5">
+                            <div class="col-sm-6 pl-0">
+                                <p class="text-right">
+                                    <button class="btn btn-space btn-primary hover" type="submit" id="submitBtn">提交
+                                    </button>
+                                    <button class="btn btn-space btn-secondary hover" type="button" id="_cancel" 
+                                            onclick="loadPage('html/customer/customer_list.html')">取消
+                                    </button>
+                                </p>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        selectInit("type", "customerType", null);
+        $('form').parsley();
+        $('#defaultForm').ajaxForm(function (result) {
+            if (result != null && result.code == 0) {
+                $("#_cancel").click();
+            }
+        }, "json");
+    });
+</script>
