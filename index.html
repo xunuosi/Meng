@@ -44,11 +44,11 @@
                         <button id="btn-start" class="btn btn-rounded btn-space btn-primary btn-lg">基金大额交易分析</button>
                     </p>
                 </div>
-                <div id="item-1-1-root" class="row justify-content-md-center margin-top-line" style="display:none">
+                <div id="item-1-root" class="row justify-content-md-center margin-top-line" style="display:none">
                     <div id="item-1-1" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-1" onclick="connectItem('item-root', 'item-1-1', true)" type="radio" name="radio-inline" class="custom-control-input"><span
-                                class="custom-control-label">巨额赎回</span>
+                            <input id="op-1-1" onclick="connectItem(1, 'item-root', 'item-1-1', true)" type="radio"
+                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">巨额赎回</span>
                         </label>
                     </div>
                     <div class="col-md-auto">
@@ -56,8 +56,25 @@
                     </div>
                     <div id="item-1-2" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-2" onclick="connectItem('item-root', 'item-1-2', true)" type="radio" name="radio-inline"
-                                class="custom-control-input"><span class="custom-control-label">超额申购</span>
+                            <input id="op-1-2" onclick="connectItem(1, 'item-root', 'item-1-2', true)" type="radio"
+                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">超额申购</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="item-2-root" class="row justify-content-md-center margin-top-line" style="display:none">
+                    <div id="item-1-1" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-1-1" onclick="connectItem(2, 'item-root', 'item-1-1', true)" type="radio"
+                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">分级基金</span>
+                        </label>
+                    </div>
+                    <div class="col-md-auto">
+                        <p class="empty-holder"></p>
+                    </div>
+                    <div id="item-1-2" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-1-2" onclick="connectItem(2, 'item-root', 'item-1-2', true)" type="radio"
+                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">非分级基金</span>
                         </label>
                     </div>
                 </div>
@@ -95,13 +112,24 @@
 
     <script type="text/javascript">
         var jsPlumbPara;
+        var nodeBeanList;
+
+        function NodeBean(nodeId, viewId, name, level, isRoot, parentNodeId, parentViewId) {
+            this.nodeId = nodeId;
+            this.viewId = viewId;
+            this.name = name;
+            this.level = level;
+            this.isRoot = isRoot;
+            this.parentNodeId = parentNodeId;
+            this.parentViewId = parentViewId;
+        }
 
         $(document).ready(function () {
             initJsplumb();
-
+            initData();
             $("#btn-start").click(function () {
                 console.log("Let`s start!");
-                $("#item-1-1-root").show("fast");
+                $("#item-1-root").show("fast");
             });
 
 
@@ -117,11 +145,16 @@
             });
         }
 
+        function initData() {
+            var bean1 = buildNodeBean('item-0', 'btn-start', '基金大额交易分析', 0, true, null, null);
+            console.log("bean1:" + bean1);
+        }
+
         /**
-        * 设置连接两个节点的方法
-        *
-        */
-        function connectItem(source, target, isDelete) {
+         * 设置连接两个节点的方法
+         *
+         */
+        function connectItem(levelNum, source, target, isDelete) {
             if (isDelete) {
                 jsPlumb.deleteConnectionsForElement(source);
             }
@@ -130,6 +163,27 @@
                 source: source,
                 target: target
             }, jsPlumbPara);
+
+            switch (levelNum) {
+                case 1:
+                    console.log("Item level:" + levelNum);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        function buildNodeBean(nodeId, viewId, name, level, isRoot, parentNodeId, parentViewId) {
+            var bean = new NodeBean();
+            bean.nodeId = nodeId;
+            bean.viewId = viewId;
+            bean.name = name;
+            bean.level = level;
+            bean.isRoot = isRoot;
+            bean.parentNodeId = parentNodeId;
+            bean.parentViewId = parentViewId;
+            return bean;
         }
     </script>
 </body>
