@@ -37,7 +37,7 @@
                 </div>
             </div>
         </nav>
-        <div class="north-content">
+        <div id="container" class="north-content">
             <div class="margin-top-common container">
                 <div id="item-root" class="row justify-content-md-center">
                     <p class="text-center">
@@ -47,8 +47,7 @@
                 <div id="item-1-root" class="row justify-content-md-center margin-top-line" style="display:none">
                     <div id="item-1-1" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-1" onclick="connectItem(1, 'item-root', 'item-1-1', true)" type="radio"
-                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">巨额赎回</span>
+                            <input id="op-1-1" type="radio" name="radio-1" class="custom-control-input"><span class="custom-control-label">巨额赎回</span>
                         </label>
                     </div>
                     <div class="col-md-auto">
@@ -56,25 +55,39 @@
                     </div>
                     <div id="item-1-2" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-2" onclick="connectItem(1, 'item-root', 'item-1-2', true)" type="radio"
-                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">超额申购</span>
+                            <input id="op-1-2" type="radio" name="radio-1" class="custom-control-input"><span class="custom-control-label">超额申购</span>
                         </label>
                     </div>
                 </div>
                 <div id="item-2-root" class="row justify-content-md-center margin-top-line" style="display:none">
-                    <div id="item-1-1" class="col-md-auto item item-filters">
+                    <div id="item-2-1" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-1" onclick="connectItem(2, 'item-root', 'item-1-1', true)" type="radio"
-                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">分级基金</span>
+                            <input id="op-2-1" type="radio" name="radio-2" class="custom-control-input"><span class="custom-control-label">分级基金</span>
                         </label>
                     </div>
                     <div class="col-md-auto">
                         <p class="empty-holder"></p>
                     </div>
-                    <div id="item-1-2" class="col-md-auto item item-filters">
+                    <div id="item-2-2" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-2" onclick="connectItem(2, 'item-root', 'item-1-2', true)" type="radio"
-                                name="radio-inline" class="custom-control-input"><span class="custom-control-label">非分级基金</span>
+                            <input id="op-2-2" type="radio" name="radio-2" class="custom-control-input"><span class="custom-control-label">非分级基金</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="item-3-root" class="row justify-content-md-center margin-top-line" style="display:none">
+                    <div id="item-3-1" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-3-1" type="radio" name="radio-inline" class="custom-control-input"><span
+                                class="custom-control-label">货币类基金</span>
+                        </label>
+                    </div>
+                    <div class="col-md-auto">
+                        <p class="empty-holder"></p>
+                    </div>
+                    <div id="item-3-2" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-3-2" type="radio" name="radio-inline" class="custom-control-input"><span
+                                class="custom-control-label">非货币类基金</span>
                         </label>
                     </div>
                 </div>
@@ -113,13 +126,15 @@
     <script type="text/javascript">
         var jsPlumbPara;
         var nodeBeanList;
+        var connectorList = new Array();
 
-        function NodeBean(nodeId, viewId, name, level, isRoot, parentNodeId, parentViewId) {
+        function NodeBean(nodeId, viewId, name, level, isRoot, checked, parentNodeId, parentViewId) {
             this.nodeId = nodeId;
             this.viewId = viewId;
             this.name = name;
             this.level = level;
             this.isRoot = isRoot;
+            this.checked = checked;
             this.parentNodeId = parentNodeId;
             this.parentViewId = parentViewId;
         }
@@ -127,60 +142,114 @@
         $(document).ready(function () {
             initJsplumb();
             initData();
-            $("#btn-start").click(function () {
+            $('#btn-start').click(function () {
                 console.log("Let`s start!");
-                $("#item-1-root").show("fast");
+                // $('#item-1-root').show("fast");
+                actionShowView("item-1-root");
+            });
+            // Level 1
+            $('#op-1-1').click(function () {
+                actionShowView("item-2-root");
+                removeConnector(1);
+                connectorList[0] = connectItem(1, 'item-root', 'item-1-1');
             });
 
+            $('#op-1-2').click(function () {
+                actionShowView("item-2-root");
+                removeConnector(1);
+                connectorList[0] = connectItem(1, 'item-root', 'item-1-2');
+            });
+            // Level 2
+            $('#op-2-1').click(function () {
+                actionShowView("item-3-root");
+                var source = connectorList[0].target;
+                removeConnector(2);
+                connectorList[1] = connectItem(2, source, 'item-2-1', true);
+            });
+
+            $('#op-2-2').click(function () {
+                actionShowView("item-3-root");
+                var source = connectorList[0].target;
+                removeConnector(2);
+                connectorList[1] = connectItem(2, source, 'item-2-2', true);
+            });
+             // Level 3
+             $('#op-3-1').click(function () {
+                // actionShowView("item-4-root");
+                var source = connectorList[1].target;
+                removeConnector(3);
+                connectorList[2] = connectItem(3, source, 'item-3-1', true);
+            });
+
+            $('#op-3-2').click(function () {
+                // actionShowView("item-4-root");
+                var source = connectorList[1].target;
+                removeConnector(3);
+                connectorList[2] = connectItem(3, source, 'item-3-2', true);
+            });
 
         });
 
         function initJsplumb() {
+            jsPlumb.setContainer($('#container'));
             jsPlumb.ready(function () {
                 jsPlumbPara = {
-                    connector: ['Flowchart'],
+                    connector: ['Bezier', { curviness: 10 }],
                     anchor: ['Bottom', 'Top'],
-                    endpoint: 'Dot'
+                    endpoint: ['Dot', {radius: 5}]
                 }
             });
         }
 
+        function actionShowView(viewId) {
+            var view = $("#" + viewId);
+            if (view != null) {
+                view.show("fast");
+            }
+        }
+
         function initData() {
-            var bean1 = buildNodeBean('item-0', 'btn-start', '基金大额交易分析', 0, true, null, null);
-            console.log("bean1:" + bean1);
+            var bean1 = buildNodeBean('item-0', 'btn-start', '基金大额交易分析', 0, true, false, null, null);
+        
         }
 
         /**
          * 设置连接两个节点的方法
          *
          */
-        function connectItem(levelNum, source, target, isDelete) {
-            if (isDelete) {
-                jsPlumb.deleteConnectionsForElement(source);
-            }
-
-            jsPlumb.connect({
+        function connectItem(levelNum, source, target) {
+            var connector = jsPlumb.connect({
                 source: source,
                 target: target
             }, jsPlumbPara);
-
+        
             switch (levelNum) {
                 case 1:
-                    console.log("Item level:" + levelNum);
+                    
                     break;
 
                 default:
                     break;
             }
+
+            return connector;
         }
 
-        function buildNodeBean(nodeId, viewId, name, level, isRoot, parentNodeId, parentViewId) {
+        function removeConnector(level) {
+            var connector = connectorList[level-1];
+            if (connector!=null) {
+                jsPlumb.deleteConnection(connector);
+            }
+        }
+
+        function buildNodeBean(nodeId, viewId, name, level, isRoot, checked, parentNodeId, parentViewId) {
             var bean = new NodeBean();
             bean.nodeId = nodeId;
             bean.viewId = viewId;
             bean.name = name;
             bean.level = level;
             bean.isRoot = isRoot;
+            bean.checked = checked;
             bean.parentNodeId = parentNodeId;
             bean.parentViewId = parentViewId;
             return bean;
