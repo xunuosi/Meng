@@ -47,7 +47,8 @@
                 <div id="item-1-root" class="row justify-content-md-center margin-top-line" style="display:none">
                     <div id="item-1-1" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-1" type="radio" name="radio-1" class="custom-control-input"><span class="custom-control-label">巨额赎回</span>
+                            <input id="op-1-1" type="radio" name="radio-1" class="custom-control-input" value="radio-1-1"><span
+                                class="custom-control-label">巨额赎回</span>
                         </label>
                     </div>
                     <div class="col-md-auto">
@@ -55,14 +56,16 @@
                     </div>
                     <div id="item-1-2" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-1-2" type="radio" name="radio-1" class="custom-control-input"><span class="custom-control-label">超额申购</span>
+                            <input id="op-1-2" type="radio" name="radio-1" class="custom-control-input" value="radio-1-2"><span
+                                class="custom-control-label">超额申购</span>
                         </label>
                     </div>
                 </div>
                 <div id="item-2-root" class="row justify-content-md-center margin-top-line" style="display:none">
                     <div id="item-2-1" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-2-1" type="radio" name="radio-2" class="custom-control-input"><span class="custom-control-label">分级基金</span>
+                            <input id="op-2-1" type="radio" name="radio-2" class="custom-control-input" value="radio-2-1"><span
+                                class="custom-control-label">分级基金</span>
                         </label>
                     </div>
                     <div class="col-md-auto">
@@ -70,14 +73,15 @@
                     </div>
                     <div id="item-2-2" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-2-2" type="radio" name="radio-2" class="custom-control-input"><span class="custom-control-label">非分级基金</span>
+                            <input id="op-2-2" type="radio" name="radio-2" class="custom-control-input" value="radio-2-2"><span
+                                class="custom-control-label">非分级基金</span>
                         </label>
                     </div>
                 </div>
                 <div id="item-3-root" class="row justify-content-md-center margin-top-line" style="display:none">
                     <div id="item-3-1" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-3-1" type="radio" name="radio-inline" class="custom-control-input"><span
+                            <input id="op-3-1" type="radio" name="radio-3" class="custom-control-input" value="radio-3-1"><span
                                 class="custom-control-label">货币类基金</span>
                         </label>
                     </div>
@@ -86,8 +90,32 @@
                     </div>
                     <div id="item-3-2" class="col-md-auto item item-filters">
                         <label class="custom-control custom-radio custom-control-inline margin-reset">
-                            <input id="op-3-2" type="radio" name="radio-inline" class="custom-control-input"><span
+                            <input id="op-3-2" type="radio" name="radio-3" class="custom-control-input" value="radio-3-2"><span
                                 class="custom-control-label">非货币类基金</span>
+                        </label>
+                    </div>
+                </div>
+                <div id="item-4-root" class="row justify-content-md-center margin-top-line" style="display:none">
+                    <div id="item-4-1" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-4-1" type="radio" name="radio-4" class="custom-control-input" value="radio-4-1"><span
+                                class="custom-control-label">单份额基金巨额赎回</span>
+                        </label>
+                    </div>
+                    <div class="col-md-auto">
+                    </div>
+                    <div id="item-4-2" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-4-2" type="radio" name="radio-4" class="custom-control-input" value="radio-4-2"><span
+                                class="custom-control-label">基金巨额赎回</span>
+                        </label>
+                    </div>
+                    <div class="col-md-auto">
+                    </div>
+                    <div id="item-4-3" class="col-md-auto item item-filters">
+                        <label class="custom-control custom-radio custom-control-inline margin-reset">
+                            <input id="op-4-3" type="radio" name="radio-4" class="custom-control-input" value="radio-4-3"><span
+                                class="custom-control-label">基金超额申购</span>
                         </label>
                     </div>
                 </div>
@@ -121,11 +149,11 @@
     <script src="plugins/bootstrap-table.min.js"></script>
     <script src="plugins/bootstrap-table-zh-CN.min.js"></script>
     <script src="assets/lib/dropzone/dist/dropzone.js" type="text/javascript"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsplumb@2.8.0/dist/js/jsplumb.min.js"></script>
+    <script src="assets/lib/jsplumb/jsplumb.min.js"></script>
 
     <script type="text/javascript">
         var jsPlumbPara;
-        var nodeBeanList;
+        var nodeBeanList = new Array();
         var connectorList = new Array();
 
         function NodeBean(nodeId, viewId, name, level, isRoot, checked, parentNodeId, parentViewId) {
@@ -142,75 +170,119 @@
         $(document).ready(function () {
             initJsplumb();
             initData();
+            initSelectorListener();
+
             $('#btn-start').click(function () {
                 console.log("Let`s start!");
                 // $('#item-1-root').show("fast");
-                actionShowView("item-1-root");
+                changeViewDisplay("item-1-root", true);
             });
             // Level 1
             $('#op-1-1').click(function () {
-                actionShowView("item-2-root");
+                changeViewDisplay("item-2-root", true);
                 removeConnector(1);
                 connectorList[0] = connectItem(1, 'item-root', 'item-1-1');
             });
 
             $('#op-1-2').click(function () {
-                actionShowView("item-2-root");
+                changeViewDisplay("item-2-root", true);
                 removeConnector(1);
                 connectorList[0] = connectItem(1, 'item-root', 'item-1-2');
             });
             // Level 2
             $('#op-2-1').click(function () {
-                actionShowView("item-3-root");
+                changeViewDisplay("item-3-root", true);
                 var source = connectorList[0].target;
                 removeConnector(2);
                 connectorList[1] = connectItem(2, source, 'item-2-1', true);
             });
 
             $('#op-2-2').click(function () {
-                actionShowView("item-3-root");
+                changeViewDisplay("item-3-root", true);
                 var source = connectorList[0].target;
                 removeConnector(2);
                 connectorList[1] = connectItem(2, source, 'item-2-2', true);
             });
-             // Level 3
-             $('#op-3-1').click(function () {
-                // actionShowView("item-4-root");
+            // Level 3
+            $('#op-3-1').click(function () {
+                changeViewDisplay("item-4-root", true);
                 var source = connectorList[1].target;
                 removeConnector(3);
                 connectorList[2] = connectItem(3, source, 'item-3-1', true);
             });
 
             $('#op-3-2').click(function () {
-                // actionShowView("item-4-root");
+                changeViewDisplay("item-4-root", true);
                 var source = connectorList[1].target;
                 removeConnector(3);
                 connectorList[2] = connectItem(3, source, 'item-3-2', true);
             });
+            // Level 4
+            $('#op-4-1').click(function () {
+                // actionShowView("item-4-root");
+                var source = connectorList[2].target;
+                removeConnector(4);
+                connectorList[3] = connectItem(4, source, 'item-4-1', true);
+            });
 
+            $('#op-4-2').click(function () {
+                // actionShowView("item-4-root");
+                var source = connectorList[2].target;
+                removeConnector(4);
+                connectorList[3] = connectItem(4, source, 'item-4-2', true);
+            });
+
+            $('#op-4-3').click(function () {
+                // actionShowView("item-4-root");
+                var source = connectorList[2].target;
+                removeConnector(4);
+                connectorList[3] = connectItem(4, source, 'item-4-3', true);
+            });
         });
 
         function initJsplumb() {
             jsPlumb.setContainer($('#container'));
             jsPlumb.ready(function () {
                 jsPlumbPara = {
-                    connector: ['Bezier', { curviness: 10 }],
-                    anchor: ['Bottom', 'Top'],
-                    endpoint: ['Dot', {radius: 5}]
+                    connector: ['Bezier', {
+                        curviness: 10
+                    }],
+                    anchor: [
+                        ['Perimeter', {
+                            shape: "Rectangle"
+                        }],
+                        ['Bottom', 'Top']
+                    ],
+                    // endpoint: ['Dot', {
+                    //     radius: 5
+                    // }],
+                    endpoint: 'Blank',
+                    overlays: [["Arrow" , { width:8, length:8, location:1}]]
                 }
             });
         }
 
-        function actionShowView(viewId) {
-            var view = $("#" + viewId);
-            if (view != null) {
-                view.show("fast");
-            }
-        }
-
         function initData() {
-            var bean1 = buildNodeBean('item-0', 'btn-start', '基金大额交易分析', 0, true, false, null, null);
-        
+            nodeBeanList.push(buildNodeBean('item-1-1', 'op-1-1', '巨额赎回', 1, false, false, 'item-root', 'btn-start'));
+            nodeBeanList.push(buildNodeBean('item-1-2', 'op-1-2', '超额申购', 1, false, false, 'item-root', 'btn-start'));
+
+            nodeBeanList.push(buildNodeBean('item-2-1', 'op-2-1', '分级基金', 2, false, false, 'item-1-root', 'item-1-root'));
+            nodeBeanList.push(buildNodeBean('item-2-2', 'op-2-2', '非分级基金', 2, false, false, 'item-1-root',
+                'item-1-root'));
+
+            nodeBeanList.push(buildNodeBean('item-3-1', 'op-3-1', '货币类基金', 3, false, false, 'item-2-root',
+                'item-2-root'));
+            nodeBeanList.push(buildNodeBean('item-3-2', 'op-3-2', '非货币类基金', 3, false, false, 'item-2-root',
+                'item-2-root'));
+
+            nodeBeanList.push(buildNodeBean('item-4-1', 'op-4-1', '单份额基金巨额赎回', 4, false, false, 'item-3-root',
+                'item-3-root'));
+            nodeBeanList.push(buildNodeBean('item-4-2', 'op-4-2', '基金巨额赎回', 4, false, false, 'item-3-root',
+                'item-3-root'));
+            nodeBeanList.push(buildNodeBean('item-4-3', 'op-4-3', '基金超额申购', 4, false, false, 'item-3-root',
+                'item-3-root'));
+
+            console.log("nodeBeanList init finished.");
         }
 
         /**
@@ -222,12 +294,14 @@
                 source: source,
                 target: target
             }, jsPlumbPara);
-        
+
             switch (levelNum) {
                 case 1:
-                    
-                    break;
 
+                    break;
+                case 2:
+
+                    break;
                 default:
                     break;
             }
@@ -236,8 +310,8 @@
         }
 
         function removeConnector(level) {
-            var connector = connectorList[level-1];
-            if (connector!=null) {
+            var connector = connectorList[level - 1];
+            if (connector != null) {
                 jsPlumb.deleteConnection(connector);
             }
         }
@@ -253,6 +327,103 @@
             bean.parentNodeId = parentNodeId;
             bean.parentViewId = parentViewId;
             return bean;
+        }
+        /**
+         * 二层点击时的解析
+         *  
+         */
+        function initSelectorListener() {
+            // level 1
+            $('input:radio[name="radio-1"]').change(
+                function () {
+                    if (this.checked) {
+                        switch (this.value) {
+                            case 'radio-1-1':
+                                // console.log("巨额赎回");
+                                nodeBeanList[0].checked = true;
+                                nodeBeanList[1].checked = false;
+                                break;
+                            case 'radio-1-2':
+                                // console.log("超额申购");
+                                nodeBeanList[0].checked = false;
+                                nodeBeanList[1].checked = true;
+                                break;
+                        }
+                    }
+                }
+            );
+            // level 2
+            $('input:radio[name="radio-2"]').change(
+                function () {
+                    if (this.checked) {
+                        switch (this.value) {
+                            case 'radio-2-1':
+                                changeViewDisplay('item-4-1', true)
+                                nodeBeanList[2].checked = true;
+                                nodeBeanList[3].checked = false;
+                                break;
+                            case 'radio-2-2':
+                                // 选中了22就不能显示41
+                                changeViewDisplay('item-4-1', false)
+                                nodeBeanList[2].checked = false;
+                                nodeBeanList[3].checked = true;
+                                break;
+                        }
+                    }
+                }
+            );
+            // level 3
+            $('input:radio[name="radio-3"]').change(
+                function () {
+                    if (this.checked) {
+                        switch (this.value) {
+                            case 'radio-3-1':
+                                nodeBeanList[4].checked = true;
+                                nodeBeanList[5].checked = false;
+                                break;
+                            case 'radio-3-2':
+                                nodeBeanList[4].checked = false;
+                                nodeBeanList[5].checked = true;
+                                break;
+                        }
+                    }
+                }
+            );
+            // level 4
+            $('input:radio[name="radio-4"]').change(
+                function () {
+                    if (this.checked) {
+                        switch (this.value) {
+                            case 'radio-4-1':
+                                nodeBeanList[6].checked = true;
+                                nodeBeanList[7].checked = false;
+                                nodeBeanList[8].checked = false;
+                                break;
+                            case 'radio-4-2':
+                                nodeBeanList[6].checked = false;
+                                nodeBeanList[7].checked = true;
+                                nodeBeanList[8].checked = false;
+                                break;
+                            case 'radio-4-3':
+                                nodeBeanList[6].checked = false;
+                                nodeBeanList[7].checked = true;
+                                nodeBeanList[8].checked = false;
+                                break;
+                        }
+                    }
+                }
+            );
+        }
+
+        function changeViewDisplay(viewId, isShow) {
+            var view = $("#" + viewId);
+            if (view != null) {
+                if (isShow) {
+                    view.show("fast");
+                } else {
+                    view.hide("fast");
+                }
+            }
         }
     </script>
 </body>
