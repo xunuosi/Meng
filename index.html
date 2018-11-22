@@ -13,7 +13,6 @@
     <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css" />
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-table.min.css" />
-    <link rel="stylesheet" type="text/css" href="assets/lib/jqvmap/jqvmap.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/bootstrap-slider/css/bootstrap-slider.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/select2/css/select2.min.css">
@@ -269,59 +268,59 @@
                     </div>
                 </div>
                 <div id="item-program-root" class="card margin-top-line" style="display:none">
-                        <div class="card-header card-header-divider pb-3">解决方案:</div>
-                        <div class="card-body pt-5">
-                            <div class="row justify-content-md-center">
-                                <div id="item-program-1" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                        交易正常处理
-                                    </div>
-                                </div>
-                                <div class="col-md-auto">
-                                </div>
-                                <div id="item-program-2" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                       交易撤单
-                                    </div>
-                                </div>
-                                <div class="col-md-auto">
-                                </div>
-                                <div id="item-program-3" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                       交易申请比例确认
-                                    </div>
-                                </div>
-                                <div class="col-md-auto">
-                                </div>
-                                <div id="item-program-4" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                        赎回款项延期支付
-                                    </div>
+                    <div class="card-header card-header-divider pb-3">解决方案:</div>
+                    <div class="card-body pt-5">
+                        <div class="row justify-content-md-center">
+                            <div id="item-program-1" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    交易正常处理
                                 </div>
                             </div>
-                            <div class="row justify-content-md-center">
-                                <div id="item-program-5" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                        公司自由资金申购提高流动性
-                                    </div>
+                            <div class="col-md-auto">
+                            </div>
+                            <div id="item-program-2" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    交易撤单
                                 </div>
-                                <div class="col-md-auto">
+                            </div>
+                            <div class="col-md-auto">
+                            </div>
+                            <div id="item-program-3" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    交易申请比例确认
                                 </div>
-                                <div id="item-program-6" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                        调整基金估值方法
-                                    </div>
+                            </div>
+                            <div class="col-md-auto">
+                            </div>
+                            <div id="item-program-4" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    赎回款项延期支付
                                 </div>
-                                <div class="col-md-auto">
+                            </div>
+                        </div>
+                        <div class="row justify-content-md-center">
+                            <div id="item-program-5" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    公司自由资金申购提高流动性
                                 </div>
-                                <div id="item-program-7" class="col-md-2 card card-full-success">
-                                    <div class="card-body">
-                                       高位数净值确认
-                                    </div>
+                            </div>
+                            <div class="col-md-auto">
+                            </div>
+                            <div id="item-program-6" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    调整基金估值方法
+                                </div>
+                            </div>
+                            <div class="col-md-auto">
+                            </div>
+                            <div id="item-program-7" class="col-md-2 card card-full-success">
+                                <div class="card-body">
+                                    高位数净值确认
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
         </div>
         <div style="height: 10rem"></div>
@@ -345,8 +344,6 @@
     <script src="assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
     <script src="assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
 
-    <script src="assets/lib/jqvmap/jquery.vmap.min.js" type="text/javascript"></script>
-    <script src="assets/lib/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script>
     <script src="assets/lib/parsley/parsley.min.js" type="text/javascript"></script>
     <script src="plugins/jquery.form.min.js" type="text/javascript"></script>
 
@@ -557,6 +554,55 @@
                 'item-5-root'));
             nodeBeanList.push(buildNodeBean('item-6-4', 'op-6-4', '无影响', 6, false, false, 'item-5-root',
                 'item-5-root'));
+            // level 7
+            nodeBeanList.push(buildNodeBean('item-7-1', 'op-7-1', '基金存在流通性差债券或股票', 7, false, false, 'item-6-root',
+                'item-6-root'));
+            nodeBeanList.push(buildNodeBean('item-7-2', 'op-7-2', '下一个交易日持仓股票/债券可能暴跌', 7, false, false, 'item-6-root',
+                'item-6-root'));
+            nodeBeanList.push(buildNodeBean('item-7-3', 'op-7-3', '无影响', 7, false, false, 'item-6-root',
+                'item-6-root'));
+            // 结果
+            nodeBeanList.push(buildNodeBean('item-8-1', 'item-result-1', '净值下一个交易日无剧烈波动', 8, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-2', 'item-result-2', '净值下一个交易日剧烈波动', 8, false, false, 'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-3', 'item-result-3', '万份收益下一个交易日剧烈波动', 8, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-4', 'item-result-4', '万份收益下一个交易日无剧烈波动', 8, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-5', 'item-result-5', '剩余份额持有人利益受损', 8, false, false, 'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-6', 'item-result-6', '剩余份额持有人利益不受损', 8, false, false, 'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-7', 'item-result-7', '基金赎回款无法支付', 8, false, false, 'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-8-8', 'item-result-8', '基金流动性风险', 8, false, false, 'item-7-root',
+                'item-7-root'));
+            // 解决方案
+            nodeBeanList.push(buildNodeBean('item-9-1', 'item-program-1', '交易正常处理', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-9-2', 'item-program-2', '交易撤单', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-9-3', 'item-program-3', '交易申请比例确认', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-9-4', 'item-program-4', '赎回款项延期支付', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-9-5', 'item-program-5', '公司自由资金申购提高流动性', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-9-6', 'item-program-6', '调整基金估值方法', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
+            nodeBeanList.push(buildNodeBean('item-9-7', 'item-program-7', '高位数净值确认', 9, false, false,
+                'item-7-root',
+                'item-7-root'));
             console.log("nodeBeanList init finished.");
         }
 
@@ -614,7 +660,8 @@
                     if (this.checked) {
                         switch (this.value) {
                             case 'radio-1-1':
-                                // console.log("巨额赎回");
+                                // 选中了11则43不能显示
+                                changeViewDisplay('item-4-3', false);
                                 nodeBeanList[0].checked = true;
                                 nodeBeanList[1].checked = false;
                                 break;
@@ -622,6 +669,8 @@
                                 // console.log("超额申购");
                                 nodeBeanList[0].checked = false;
                                 nodeBeanList[1].checked = true;
+                                // Reset state
+                                changeViewDisplay('item-4-3', true);
                                 break;
                         }
                     }
@@ -633,6 +682,7 @@
                     if (this.checked) {
                         switch (this.value) {
                             case 'radio-2-1':
+                                // Reset state
                                 changeViewDisplay('item-4-1', true)
                                 nodeBeanList[2].checked = true;
                                 nodeBeanList[3].checked = false;
@@ -655,10 +705,26 @@
                             case 'radio-3-1':
                                 nodeBeanList[4].checked = true;
                                 nodeBeanList[5].checked = false;
+                                // 选中了31就不能显示51、结果层1、2。
+                                changeViewDisplay('item-5-1', false);
+                                changeResultDisplay('item-result-1', 20, false);
+                                changeResultDisplay('item-result-2', 21, false);
+
+                                // Reset state
+                                changeResultDisplay('item-result-3', 22, true);
+                                changeResultDisplay('item-result-4', 23, true);
                                 break;
                             case 'radio-3-2':
                                 nodeBeanList[4].checked = false;
                                 nodeBeanList[5].checked = true;
+                                // 选中了32就不能显示结果层3、4
+                                changeResultDisplay('item-result-3', 22, false);
+                                changeResultDisplay('item-result-4', 23, false);
+
+                                // Reset state
+                                changeViewDisplay('item-5-1', true);
+                                changeResultDisplay('item-result-1', 20, true);
+                                changeResultDisplay('item-result-2', 21, true);
                                 break;
                         }
                     }
@@ -739,6 +805,19 @@
                 } else {
                     view.css("visibility", "hidden");
                     // view.hide("fast");
+                }
+            }
+        }
+        // 隐藏View的同时改变变量的选中值(根据数组中的index值来修改)
+        function changeResultDisplay(viewId, index, isShow) {
+            var view = $("#" + viewId);
+            if (view != null) {
+                if (isShow) {
+                    nodeBeanList[index].checked = true;
+                    view.show("fast");
+                } else {
+                    nodeBeanList[index].checked = false;
+                    view.hide("fast");
                 }
             }
         }
