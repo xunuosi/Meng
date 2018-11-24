@@ -12,12 +12,7 @@
     <link rel="stylesheet" type="text/css" href="assets/lib/perfect-scrollbar/css/perfect-scrollbar.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/material-design-icons/css/material-design-iconic-font.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/jquery.vectormap/jquery-jvectormap-1.2.2.css" />
-    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap-table.min.css" />
     <link rel="stylesheet" type="text/css" href="assets/lib/bootstrap-slider/css/bootstrap-slider.min.css" />
-    <link rel="stylesheet" type="text/css" href="assets/lib/datetimepicker/css/bootstrap-datetimepicker.min.css" />
-    <link rel="stylesheet" type="text/css" href="assets/lib/select2/css/select2.min.css">
-    <!-- <link href="/assets/css/fontawesome/fontawesome-all.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="assets/lib/dropzone/dist/dropzone.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/app.css" type="text/css" />
     <link rel="stylesheet" href="assets/css/north.css" type="text/css" />
 </head>
@@ -118,148 +113,150 @@
                         </label>
                     </div>
                 </div>
-                <div id="item-5-root" class="row justify-content-md-center margin-top-line" style="display:none">
-                    <div id="item-5-1" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-5-1" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-1"><span
-                                class="custom-control-label">赎回费归基金资产过高</span>
-                        </label>
+                <div id="item-decision-root" class="row" style="display:none">
+                    <div id="item-5-root" class="row justify-content-md-center margin-top-line">
+                        <div id="item-5-1" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-5-1" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-1"><span
+                                    class="custom-control-label">赎回费归基金资产过高</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-5-2" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-5-2" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-2"><span
+                                    class="custom-control-label">超巨额赎回时赎回款利息过高</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-5-3" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-5-3" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-3"><span
+                                    class="custom-control-label">超过集中度限制</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-5-4" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-5-4" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-4"><span
+                                    class="custom-control-label">无影响</span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="col-md-auto">
+                    <div id="item-6-root" class="row justify-content-md-center margin-top-line">
+                        <div id="item-6-1" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-6-1" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-1"><span
+                                    class="custom-control-label">FA计提基金相关费用过高</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-6-2" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-6-2" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-2"><span
+                                    class="custom-control-label">基金7日可变现资产不满足</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-6-3" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-6-3" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-3"><span
+                                    class="custom-control-label">基金估值根市值偏差大</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-6-4" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-6-4" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-4"><span
+                                    class="custom-control-label">无影响</span>
+                            </label>
+                        </div>
                     </div>
-                    <div id="item-5-2" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-5-2" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-2"><span
-                                class="custom-control-label">超巨额赎回时赎回款利息过高</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-5-3" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-5-3" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-3"><span
-                                class="custom-control-label">超过集中度限制</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-5-4" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-5-4" name="checkbox-5" type="checkbox" class="custom-control-input" value="cb-5-4"><span
-                                class="custom-control-label">无影响</span>
-                        </label>
-                    </div>
-                </div>
-                <div id="item-6-root" class="row justify-content-md-center margin-top-line" style="display:none">
-                    <div id="item-6-1" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-6-1" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-1"><span
-                                class="custom-control-label">FA计提基金相关费用过高</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-6-2" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-6-2" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-2"><span
-                                class="custom-control-label">基金7日可变现资产不满足</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-6-3" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-6-3" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-3"><span
-                                class="custom-control-label">基金估值根市值偏差大</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-6-4" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-6-4" name="checkbox-6" type="checkbox" class="custom-control-input" value="cb-6-4"><span
-                                class="custom-control-label">无影响</span>
-                        </label>
-                    </div>
-                </div>
-                <div id="item-7-root" class="row justify-content-md-center margin-top-line" style="display:none">
-                    <div id="item-7-1" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-7-1" name="checkbox-7" type="checkbox" class="custom-control-input" value="cb-7-1"><span
-                                class="custom-control-label">基金存在流通性差债券或股票</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-7-2" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-7-2" name="checkbox-7" type="checkbox" class="custom-control-input" value="cb-7-2"><span
-                                class="custom-control-label">下一个交易日持仓股票/债券可能暴跌</span>
-                        </label>
-                    </div>
-                    <div class="col-md-auto">
-                    </div>
-                    <div id="item-7-3" class="col-md-auto item item-filters">
-                        <label class="custom-control custom-checkbox custom-control-inline margin-reset">
-                            <input id="op-7-3" name="checkbox-7" type="checkbox" class="custom-control-input" value="cb-7-3"><span
-                                class="custom-control-label">无影响</span>
-                        </label>
+                    <div id="item-7-root" class="row justify-content-md-center margin-top-line">
+                        <div id="item-7-1" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-7-1" name="checkbox-7" type="checkbox" class="custom-control-input" value="cb-7-1"><span
+                                    class="custom-control-label">基金存在流通性差债券或股票</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-7-2" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-7-2" name="checkbox-7" type="checkbox" class="custom-control-input" value="cb-7-2"><span
+                                    class="custom-control-label">下一个交易日持仓股票/债券可能暴跌</span>
+                            </label>
+                        </div>
+                        <div class="col-md-auto">
+                        </div>
+                        <div id="item-7-3" class="col-md-auto item item-filters">
+                            <label class="custom-control custom-checkbox custom-control-inline margin-reset">
+                                <input id="op-7-3" name="checkbox-7" type="checkbox" class="custom-control-input" value="cb-7-3"><span
+                                    class="custom-control-label">无影响</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div id="item-result-root" class="card margin-top-line" style="display:none">
                     <div class="card-header card-header-divider pb-3">结果:</div>
                     <div class="card-body pt-5">
                         <div class="row justify-content-md-center">
-                            <div id="item-result-1" class="col-md-2 card card-full">
+                            <div id="item-result-1" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     净值下一个交易日无剧烈波动
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-result-2" class="col-md-2 card card-full">
+                            <div id="item-result-2" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     净值下一个交易日剧烈波动
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-result-3" class="col-md-2 card card-full">
+                            <div id="item-result-3" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     万份收益下一个交易日剧烈波动
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-result-4" class="col-md-2 card card-full">
+                            <div id="item-result-4" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     万份收益下一个交易日无剧烈波动
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-md-center">
-                            <div id="item-result-5" class="col-md-2 card card-full">
+                            <div id="item-result-5" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     剩余份额持有人利益受损
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-result-6" class="col-md-2 card card-full">
+                            <div id="item-result-6" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     剩余份额持有人利益不受损
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-result-7" class="col-md-2 card card-full">
+                            <div id="item-result-7" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     基金赎回款无法支付
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-result-8" class="col-md-2 card card-full">
+                            <div id="item-result-8" class="col-md-2 card card-full" style="visibility:hidden">
                                 <div class="card-body">
                                     基金流动性风险
                                 </div>
@@ -271,49 +268,49 @@
                     <div class="card-header card-header-divider pb-3">解决方案:</div>
                     <div class="card-body pt-5">
                         <div class="row justify-content-md-center">
-                            <div id="item-program-1" class="col-md-2 card card-full-success">
+                            <div id="item-program-1" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     交易正常处理
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-program-2" class="col-md-2 card card-full-success">
+                            <div id="item-program-2" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     交易撤单
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-program-3" class="col-md-2 card card-full-success">
+                            <div id="item-program-3" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     交易申请比例确认
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-program-4" class="col-md-2 card card-full-success">
+                            <div id="item-program-4" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     赎回款项延期支付
                                 </div>
                             </div>
                         </div>
                         <div class="row justify-content-md-center">
-                            <div id="item-program-5" class="col-md-2 card card-full-success">
+                            <div id="item-program-5" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     公司自由资金申购提高流动性
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-program-6" class="col-md-2 card card-full-success">
+                            <div id="item-program-6" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     调整基金估值方法
                                 </div>
                             </div>
                             <div class="col-md-auto">
                             </div>
-                            <div id="item-program-7" class="col-md-2 card card-full-success">
+                            <div id="item-program-7" class="col-md-2 card card-full-success" style="visibility:hidden">
                                 <div class="card-body">
                                     高位数净值确认
                                 </div>
@@ -328,7 +325,6 @@
     <script src="assets/lib/jquery/jquery.min.js" type="text/javascript"></script>
     <script src="assets/lib/perfect-scrollbar/js/perfect-scrollbar.jquery.min.js" type="text/javascript"></script>
     <script src="assets/lib/bootstrap/dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-    <script src="assets/js/app.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.pie.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-flot/jquery.flot.time.js" type="text/javascript"></script>
@@ -339,17 +335,9 @@
     <script src="assets/lib/jquery.sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
     <script src="assets/lib/countup/countUp.min.js" type="text/javascript"></script>
     <script src="assets/lib/bootstrap-slider/bootstrap-slider.min.js" type="text/javascript"></script>
-    <script src="assets/lib/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <script src="assets/lib/jquery-ui/jquery-ui.min.js" type="text/javascript"></script>
-    <script src="assets/lib/select2/js/select2.min.js" type="text/javascript"></script>
-    <script src="assets/lib/select2/js/select2.full.min.js" type="text/javascript"></script>
 
-    <script src="assets/lib/parsley/parsley.min.js" type="text/javascript"></script>
     <script src="plugins/jquery.form.min.js" type="text/javascript"></script>
-
-    <script src="plugins/bootstrap-table.min.js"></script>
-    <script src="plugins/bootstrap-table-zh-CN.min.js"></script>
-    <script src="assets/lib/dropzone/dist/dropzone.js" type="text/javascript"></script>
     <script src="assets/lib/jsplumb/jsplumb.min.js"></script>
 
     <script type="text/javascript">
@@ -420,72 +408,93 @@
             });
             // Level 4
             $('#op-4-1').click(function () {
-                changeViewDisplay("item-5-root", true);
+                // 显示决策层、结果层、方案层
+                changeViewDisplay("item-decision-root", true);
+                changeViewDisplay("item-result-root", true);
+                changeViewDisplay("item-program-root", true);
+
                 var source = connectorList[2].target;
                 removeConnector(4);
                 connectorList[3] = connectItem(4, source, 'item-4-1', true);
             });
 
             $('#op-4-2').click(function () {
-                changeViewDisplay("item-5-root", true);
+                // 显示决策层、结果层、方案层
+                changeViewDisplay("item-decision-root", true);
+                changeViewDisplay("item-result-root", true);
+                changeViewDisplay("item-program-root", true);
+
                 var source = connectorList[2].target;
                 removeConnector(4);
                 connectorList[3] = connectItem(4, source, 'item-4-2', true);
             });
 
             $('#op-4-3').click(function () {
-                changeViewDisplay("item-5-root", true);
+                // 显示决策层、结果层、方案层
+                changeViewDisplay("item-decision-root", true);
+                changeViewDisplay("item-result-root", true);
+                changeViewDisplay("item-program-root", true);
+
                 var source = connectorList[2].target;
                 removeConnector(4);
                 connectorList[3] = connectItem(4, source, 'item-4-3', true);
             });
-            // Level 5 支持多选
-            $('#op-5-1').click(function () {
-                changeViewDisplay("item-6-root", true);
-            });
+            // // Level 5 支持多选
+            // $('#op-5-1').click(function () {
+            //     changeViewDisplay("item-6-root", true);
+            // });
 
-            $('#op-5-2').click(function () {
-                changeViewDisplay("item-6-root", true);
-            });
+            // $('#op-5-2').click(function () {
+            //     changeViewDisplay("item-6-root", true);
+            // });
 
-            $('#op-5-3').click(function () {
-                changeViewDisplay("item-6-root", true);
-            });
+            // $('#op-5-3').click(function () {
+            //     changeViewDisplay("item-6-root", true);
+            // });
 
-            $('#op-5-4').click(function () {
-                changeViewDisplay("item-6-root", true);
-            });
-            // Level 6 支持多选
-            $('#op-6-1').click(function () {
-                changeViewDisplay("item-7-root", true);
-            });
+            // $('#op-5-4').click(function () {
+            //     changeViewDisplay("item-6-root", true);
+            // });
+            // // Level 6 支持多选
+            // $('#op-6-1').click(function () {
+            //     // 第7层显示条件: item-4-1.checked == false
+            //     if (!$('#op-4-1').checked) {
+            //         changeViewDisplay("item-7-root", true);
+            //     }
+            // });
 
-            $('#op-6-2').click(function () {
-                changeViewDisplay("item-7-root", true);
-            });
+            // $('#op-6-2').click(function () {
+            //     if (!$('#op-4-1').checked) {
+            //         changeViewDisplay("item-7-root", true);
+            //     }
+            // });
 
-            $('#op-6-3').click(function () {
-                changeViewDisplay("item-7-root", true);
-            });
+            // $('#op-6-3').click(function () {
+            //     if (!$('#op-4-1').checked) {
+            //         changeViewDisplay("item-7-root", true);
+            //     }
+            // });
 
-            $('#op-6-4').click(function () {
-                changeViewDisplay("item-7-root", true);
-            });
-            // Level 7 支持多选 7层选择时要显示 结果层和方案层
-            $('#op-7-1').click(function () {
-                changeViewDisplay("item-result-root", true);
-                changeViewDisplay("item-program-root", true);
-            });
+            // $('#op-6-4').click(function () {
+            //     if (!$('#op-4-1').checked) {
+            //         changeViewDisplay("item-7-root", true);
+            //     }
+            // });
+            // // Level 7 支持多选 7层选择时要显示 结果层和方案层
+            // $('#op-7-1').click(function () {
+            //     changeViewDisplay("item-result-root", true);
+            //     changeViewDisplay("item-program-root", true);
+            // });
 
-            $('#op-7-2').click(function () {
-                changeViewDisplay("item-result-root", true);
-                changeViewDisplay("item-program-root", true);
-            });
+            // $('#op-7-2').click(function () {
+            //     changeViewDisplay("item-result-root", true);
+            //     changeViewDisplay("item-program-root", true);
+            // });
 
-            $('#op-7-3').click(function () {
-                changeViewDisplay("item-result-root", true);
-                changeViewDisplay("item-program-root", true);
-            });
+            // $('#op-7-3').click(function () {
+            //     changeViewDisplay("item-result-root", true);
+            //     changeViewDisplay("item-program-root", true);
+            // });
         });
 
         function initJsplumb() {
@@ -661,16 +670,36 @@
                         switch (this.value) {
                             case 'radio-1-1':
                                 // 选中了11则43不能显示
-                                changeViewDisplay('item-4-3', false);
+                                changeFactorDisplay('item-4-3', 'op-4-3', false);
+
                                 nodeBeanList[0].checked = true;
                                 nodeBeanList[1].checked = false;
+                                
+                                // reset
+                                changeFactorDisplay('item-4-1', 'op-4-1', true);
+                                changeFactorDisplay('item-4-2', 'op-4-2', true);
+                                changeDecisionDisplay('item-5-1', 'op-5-1', true);
+                                changeDecisionDisplay('item-5-2', 'op-5-2', true);
+                                changeDecisionDisplay('item-6-1', 'op-6-1', true);
+                                changeDecisionDisplay('item-6-2', 'op-6-2', true);
+                                changeRootItemDisplay('item-7-root', 7, true);
                                 break;
                             case 'radio-1-2':
-                                // console.log("超额申购");
+                                // 如果选中了12则第四层因子只能显示43
+                                changeFactorDisplay('item-4-1', 'op-4-1', false);
+                                changeFactorDisplay('item-4-2', 'op-4-2', false);
+                                // 如果选中了12，TA-决策层只能显示53和54，FA-决策层只能显示 63和64 ，FM-决策层不用显示
+                                changeDecisionDisplay('item-5-1', 'op-5-1', false);
+                                changeDecisionDisplay('item-5-2', 'op-5-2', false);
+                                changeDecisionDisplay('item-6-1', 'op-6-1', false);
+                                changeDecisionDisplay('item-6-2', 'op-6-2', false);
+                                changeRootItemDisplay('item-7-root', 7, false);
+
                                 nodeBeanList[0].checked = false;
                                 nodeBeanList[1].checked = true;
+
                                 // Reset state
-                                changeViewDisplay('item-4-3', true);
+                                changeFactorDisplay('item-4-3', 'op-4-3', true);
                                 break;
                         }
                     }
@@ -683,13 +712,15 @@
                         switch (this.value) {
                             case 'radio-2-1':
                                 // Reset state
-                                changeViewDisplay('item-4-1', true)
+                                changeFactorDisplay('item-4-1', 'op-4-1', true)
+
                                 nodeBeanList[2].checked = true;
                                 nodeBeanList[3].checked = false;
                                 break;
                             case 'radio-2-2':
                                 // 选中了22就不能显示41
-                                changeViewDisplay('item-4-1', false)
+                                changeFactorDisplay('item-4-1', 'op-4-1', false)
+
                                 nodeBeanList[2].checked = false;
                                 nodeBeanList[3].checked = true;
                                 break;
@@ -706,25 +737,25 @@
                                 nodeBeanList[4].checked = true;
                                 nodeBeanList[5].checked = false;
                                 // 选中了31就不能显示51、结果层1、2。
-                                changeViewDisplay('item-5-1', false);
-                                changeResultDisplay('item-result-1', 20, false);
-                                changeResultDisplay('item-result-2', 21, false);
+                                changeDecisionDisplay('item-5-1', 'op-5-1', false);
+                                changeResultDisplay('item-result-1', false);
+                                changeResultDisplay('item-result-2', false);
 
                                 // Reset state
-                                changeResultDisplay('item-result-3', 22, true);
-                                changeResultDisplay('item-result-4', 23, true);
+                                changeResultDisplay('item-result-3', true);
+                                changeResultDisplay('item-result-4', true);
                                 break;
                             case 'radio-3-2':
                                 nodeBeanList[4].checked = false;
                                 nodeBeanList[5].checked = true;
                                 // 选中了32就不能显示结果层3、4
-                                changeResultDisplay('item-result-3', 22, false);
-                                changeResultDisplay('item-result-4', 23, false);
+                                changeResultDisplay('item-result-3', false);
+                                changeResultDisplay('item-result-4', false);
 
                                 // Reset state
-                                changeViewDisplay('item-5-1', true);
-                                changeResultDisplay('item-result-1', 20, true);
-                                changeResultDisplay('item-result-2', 21, true);
+                                changeDecisionDisplay('item-5-1', 'op-5-1', true);
+                                changeResultDisplay('item-result-1', true);
+                                changeResultDisplay('item-result-2', true);
                                 break;
                         }
                     }
@@ -736,25 +767,54 @@
                     if (this.checked) {
                         switch (this.value) {
                             case 'radio-4-1':
+                                // 选中了41 则FM-决策层(level 7)不能显示
+                                changeRootItemDisplay('item-7-root', 7, false);
+
                                 nodeBeanList[6].checked = true;
                                 nodeBeanList[7].checked = false;
                                 nodeBeanList[8].checked = false;
+
+                                // reset
+                                changeDecisionDisplay('item-5-1', 'op-5-1', true);
+                                changeDecisionDisplay('item-5-2', 'op-5-2', true);
+                                changeDecisionDisplay('item-6-1', 'op-6-1', true);
+                                changeDecisionDisplay('item-6-2', 'op-6-2', true);
+                                changeDecisionDisplay('item-7-1', 'op-7-1', true);
+                                changeDecisionDisplay('item-7-2', 'op-7-2', true);
                                 break;
                             case 'radio-4-2':
                                 nodeBeanList[6].checked = false;
                                 nodeBeanList[7].checked = true;
                                 nodeBeanList[8].checked = false;
+                                // reset 
+                                changeRootItemDisplay('item-7-root', 7, true);
+                                changeDecisionDisplay('item-5-1', 'op-5-1', true);
+                                changeDecisionDisplay('item-5-2', 'op-5-2', true);
+                                changeDecisionDisplay('item-6-1', 'op-6-1', true);
+                                changeDecisionDisplay('item-6-2', 'op-6-2', true);
+                                changeDecisionDisplay('item-7-1', 'op-7-1', true);
+                                changeDecisionDisplay('item-7-2', 'op-7-2', true);
                                 break;
                             case 'radio-4-3':
+                                // 如果选中了43不能显示51、52、61、62、71、72
+                                changeDecisionDisplay('item-5-1', 'op-5-1', false);
+                                changeDecisionDisplay('item-5-2', 'op-5-2', false);
+                                changeDecisionDisplay('item-6-1', 'op-6-1', false);
+                                changeDecisionDisplay('item-6-2', 'op-6-2', false);
+                                changeDecisionDisplay('item-7-1', 'op-7-1', false);
+                                changeDecisionDisplay('item-7-2', 'op-7-2', false);
+
                                 nodeBeanList[6].checked = false;
                                 nodeBeanList[7].checked = true;
                                 nodeBeanList[8].checked = false;
+                                // reset 
+                                changeRootItemDisplay('item-7-root', 7, true);
                                 break;
                         }
                     }
                 }
             );
-            // level 5 6 7
+            // level 5 6 7 决策层的选中状态与因子组合策略来说结果层和方案层
             $('input:checkbox').change(
                 function () {
                     switch (this.value) {
@@ -792,6 +852,8 @@
                             nodeBeanList[19].checked = this.checked;
                             break;
                     }
+
+                    parseResultAndProgram();
                 }
             );
         }
@@ -808,17 +870,220 @@
                 }
             }
         }
-        // 隐藏View的同时改变变量的选中值(根据数组中的index值来修改)
-        function changeResultDisplay(viewId, index, isShow) {
+
+        // 改变因子层View显示的方法
+        function changeFactorDisplay(viewId, itemViewId, isShow) {
             var view = $("#" + viewId);
             if (view != null) {
                 if (isShow) {
-                    nodeBeanList[index].checked = true;
+                    view.css("visibility", "visible");
+                } else {
+                    view.css("visibility", "hidden");
+                    // 设置子view状态为未选中
+                    changeItemState(itemViewId, false);
+                }
+            }
+        }
+        // 改变决策层View显示的方法
+        function changeDecisionDisplay(viewId, itemViewId, isShow) {
+            var view = $("#" + viewId);
+            if (view != null) {
+                if (isShow) {
+                    // view.show("fast");
+                    view.css("visibility", "visible");
+                } else {
+                    // view.hide("fast");
+                    view.css("visibility", "hidden");
+                    // 设置子view状态为未选中
+                    changeItemState(itemViewId, false);
+                }
+            }
+        }
+
+        // 隐藏View的同时改变变量的选中值(根据数组中的index值来修改)
+        function changeResultDisplay(viewId, isShow) {
+            var view = $("#" + viewId);
+            if (view != null) {
+                if (isShow) {
+                    // view.show("fast");
+                    view.css("visibility", "visible");
+                    // 设置子view状态为选中
+                    changeItemState(viewId, true);
+                } else {
+                    view.css("visibility", "hidden");
+                    // view.hide("fast");
+                    // 设置子view状态为未选中
+                    changeItemState(viewId, false);
+                }
+            }
+        }
+
+        function changeProgramDisplay(viewId, isShow) {
+            var view = $("#" + viewId);
+            if (view != null) {
+                if (isShow) {
+                    view.css("visibility", "visible");
+                    // 设置子view状态为选中
+                    changeItemState(viewId, true);
+                } else {
+                    view.css("visibility", "hidden");
+                    // 设置子view状态为未选中
+                    changeItemState(viewId, false);
+                }
+            }
+        }
+
+        // 设置Root节点的显示状态
+        function changeRootItemDisplay(rootId, level, isShow) {
+            var view = $("#" + rootId);
+            if (view != null) {
+                if (isShow) {
                     view.show("fast");
                 } else {
-                    nodeBeanList[index].checked = false;
                     view.hide("fast");
+                    // 设置子view状态为未选中
+                    $.each(nodeBeanList, function (index, value) {
+                        if (value.level == level) {
+                            value.checked = false;
+                            var itemView = $("#" + value.viewId);
+                            itemView.prop('checked', false).change();
+                        }
+                    });
                 }
+            }
+        }
+
+        // 遍历nodeList设置给定Item的checked状态
+        function changeItemState(itemViewId, isChecked) {
+            $.each(nodeBeanList, function (index, value) {
+                if (value.viewId == itemViewId) {
+                    value.checked = isChecked;
+                    var itemView = $("#" + value.viewId);
+                    itemView.prop('checked', isChecked).change();
+                    return;
+                }
+            });
+        }
+
+        function parseResultAndProgram() {
+            // Reset result and program view state
+            resetResultAndProgram(true);
+
+            var resultStr = new Array();
+            $.each(nodeBeanList, function (index, value) {
+                if (value.checked == true) {
+                    resultStr.push(value.nodeId);
+                }
+            });
+           
+            // 因子31组合策略
+
+            // 如果前面选中了31，TA-决策层选中了52 则结果层显示3，解决方案显示2 和3和5和7
+            // 如果前面选中了31，FA-决策层如果选中了61 则结果层显示3，解决方案显示2和3和5和7
+            if (($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-5-2', resultStr) > -1) || 
+            ($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-6-1', resultStr) > -1)) {
+                changeResultDisplay('item-result-3', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+            
+            // 如果前面选中了31,FA-决策层如果有选中了62则结果层显示7，解决方案显示2和3和4和5和7
+            if ($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-6-2', resultStr) > -1) {
+                changeResultDisplay('item-result-7', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-4', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+
+            // 如果选中了63则结果层显示5，解决方案显示2和3和5和6和7
+            if ($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-6-3', resultStr) > -1) {
+                changeResultDisplay('item-result-5', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-6', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+            // 如果前面选中了31，FM-决策层选中了71或者72其中一个则结果层显示5，解决方案显示2和3和5和7
+            if ($.inArray('item-3-1', resultStr) > -1 && 
+            ($.inArray('item-7-1', resultStr) > -1 || $.inArray('item-7-2', resultStr) > -1)) {
+                changeResultDisplay('item-result-5', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+
+            // 因子32组合策略
+            
+            // 如果前面选中了32，TA-决策层选中了51或者52 则结果层显示2，解决方案显示2和3和5和7
+            // 如果前面选中了32，FA-决策层如果选中了61 则结果层显示2，解决方案显示2和3和5和7；
+            if ($.inArray('item-3-2', resultStr) > -1 && 
+            ($.inArray('item-5-1', resultStr) > -1 || $.inArray('item-5-2', resultStr) > -1 || $.inArray('item-6-1', resultStr) > -1)) {
+                changeResultDisplay('item-result-2', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+            // 如果有选中了62则结果层显示7，解决方案显示2和3和4和5和7
+            if ($.inArray('item-3-2', resultStr) > -1 && $.inArray('item-6-2', resultStr) > -1) {
+                changeResultDisplay('item-result-7', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-4', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+            // 如果选中了63则结果层显示5，解决方案显示2和3和5和6和7
+            if ($.inArray('item-3-2', resultStr) > -1 && $.inArray('item-6-3', resultStr) > -1) {
+                changeResultDisplay('item-result-5', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-6', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+            // 如果前面选中了32，FM-决策层选中了71或者72其中一个则结果层显示5，解决方案显示2和3和5和7
+            if ($.inArray('item-3-2', resultStr) > -1 && 
+            ($.inArray('item-7-1', resultStr) > -1 || $.inArray('item-7-2', resultStr) > -1)) {
+                changeResultDisplay('item-result-5', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+                changeProgramDisplay('item-program-5', true);
+                changeProgramDisplay('item-program-7', true);
+            }
+
+            // 因子12组合策略
+            
+            // 如果TA-决策层选中了53，则结果层显示8解决方案显示2和3
+            if ($.inArray('item-1-2', resultStr) > -1 && $.inArray('item-5-3', resultStr) > -1) {
+                changeResultDisplay('item-result-8', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+            }
+            // 如果FA-决策层选中了63则结果层显示5解决方案显示2和3
+            if ($.inArray('item-1-2', resultStr) > -1 && $.inArray('item-6-3', resultStr) > -1) {
+                changeResultDisplay('item-result-5', true);
+                changeProgramDisplay('item-program-2', true);
+                changeProgramDisplay('item-program-3', true);
+            }
+        }
+
+        function resetResultAndProgram(isReset) {
+            if (isReset) {
+                $.each(nodeBeanList, function (index, value) {
+                    if (value.level == 8) {
+                        changeResultDisplay(value.viewId, false);
+                    }
+                    if (value.level == 9) {
+                        changeProgramDisplay(value.viewId, false)
+                    }
+                });
             }
         }
     </script>
