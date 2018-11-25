@@ -641,7 +641,7 @@
 
         function removeConnector(level) {
             var connector = connectorList[level - 1];
-            if (connector != null) {
+            if (connector != null && connector.target != null && connector.source != null) {
                 jsPlumb.deleteConnection(connector);
             }
         }
@@ -660,7 +660,7 @@
         }
         /**
          * 二层点击时的解析
-         *  
+         *  (前四层因子层变化选择时需要重置下边的层次)
          */
         function initSelectorListener() {
             // level 1
@@ -674,7 +674,7 @@
 
                                 nodeBeanList[0].checked = true;
                                 nodeBeanList[1].checked = false;
-                                
+
                                 // reset
                                 changeFactorDisplay('item-4-1', 'op-4-1', true);
                                 changeFactorDisplay('item-4-2', 'op-4-2', true);
@@ -683,6 +683,9 @@
                                 changeDecisionDisplay('item-6-1', 'op-6-1', true);
                                 changeDecisionDisplay('item-6-2', 'op-6-2', true);
                                 changeRootItemDisplay('item-7-root', 7, true);
+
+                                // Clear other down level state
+                                clearStateWithLevel(1);
                                 break;
                             case 'radio-1-2':
                                 // 如果选中了12则第四层因子只能显示43
@@ -700,6 +703,8 @@
 
                                 // Reset state
                                 changeFactorDisplay('item-4-3', 'op-4-3', true);
+                                // Clear other down level state
+                                clearStateWithLevel(1);
                                 break;
                         }
                     }
@@ -716,6 +721,8 @@
 
                                 nodeBeanList[2].checked = true;
                                 nodeBeanList[3].checked = false;
+                                // Clear other down level state
+                                clearStateWithLevel(2);
                                 break;
                             case 'radio-2-2':
                                 // 选中了22就不能显示41
@@ -723,6 +730,8 @@
 
                                 nodeBeanList[2].checked = false;
                                 nodeBeanList[3].checked = true;
+                                // Clear other down level state
+                                clearStateWithLevel(2);
                                 break;
                         }
                     }
@@ -744,6 +753,8 @@
                                 // Reset state
                                 changeResultDisplay('item-result-3', true);
                                 changeResultDisplay('item-result-4', true);
+                                // Clear other down level state
+                                clearStateWithLevel(3);
                                 break;
                             case 'radio-3-2':
                                 nodeBeanList[4].checked = false;
@@ -756,6 +767,8 @@
                                 changeDecisionDisplay('item-5-1', 'op-5-1', true);
                                 changeResultDisplay('item-result-1', true);
                                 changeResultDisplay('item-result-2', true);
+                                // Clear other down level state
+                                clearStateWithLevel(3);
                                 break;
                         }
                     }
@@ -781,6 +794,8 @@
                                 changeDecisionDisplay('item-6-2', 'op-6-2', true);
                                 changeDecisionDisplay('item-7-1', 'op-7-1', true);
                                 changeDecisionDisplay('item-7-2', 'op-7-2', true);
+                                // Clear other down level state
+                                clearStateWithLevel(4);
                                 break;
                             case 'radio-4-2':
                                 nodeBeanList[6].checked = false;
@@ -794,6 +809,8 @@
                                 changeDecisionDisplay('item-6-2', 'op-6-2', true);
                                 changeDecisionDisplay('item-7-1', 'op-7-1', true);
                                 changeDecisionDisplay('item-7-2', 'op-7-2', true);
+                                // Clear other down level state
+                                clearStateWithLevel(4);
                                 break;
                             case 'radio-4-3':
                                 // 如果选中了43不能显示51、52、61、62、71、72
@@ -809,6 +826,8 @@
                                 nodeBeanList[8].checked = false;
                                 // reset 
                                 changeRootItemDisplay('item-7-root', 7, true);
+                                // Clear other down level state
+                                clearStateWithLevel(4);
                                 break;
                         }
                     }
@@ -827,7 +846,14 @@
                         case 'cb-5-3':
                             nodeBeanList[11].checked = this.checked;
                             break;
+                            // 无影响
                         case 'cb-5-4':
+                            // 无影响按钮选中后要将其它选项设置成未选择状态
+                            if (this.checked) {
+                                actionIgnore(5);
+                            } else {
+                                actionRestoreIgnore(5);
+                            }
                             nodeBeanList[12].checked = this.checked;
                             break;
                         case 'cb-6-1':
@@ -839,7 +865,13 @@
                         case 'cb-6-3':
                             nodeBeanList[15].checked = this.checked;
                             break;
+                            // 无影响    
                         case 'cb-6-4':
+                            if (this.checked) {
+                                actionIgnore(6);
+                            } else {
+                                actionRestoreIgnore(6);
+                            }
                             nodeBeanList[16].checked = this.checked;
                             break;
                         case 'cb-7-1':
@@ -848,7 +880,13 @@
                         case 'cb-7-2':
                             nodeBeanList[18].checked = this.checked;
                             break;
+                            // 无影响    
                         case 'cb-7-3':
+                            if (this.checked) {
+                                actionIgnore(7);
+                            } else {
+                                actionRestoreIgnore(7);
+                            }
                             nodeBeanList[19].checked = this.checked;
                             break;
                     }
@@ -975,20 +1013,20 @@
                     resultStr.push(value.nodeId);
                 }
             });
-           
+
             // 因子31组合策略
 
             // 如果前面选中了31，TA-决策层选中了52 则结果层显示3，解决方案显示2 和3和5和7
             // 如果前面选中了31，FA-决策层如果选中了61 则结果层显示3，解决方案显示2和3和5和7
-            if (($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-5-2', resultStr) > -1) || 
-            ($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-6-1', resultStr) > -1)) {
+            if (($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-5-2', resultStr) > -1) ||
+                ($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-6-1', resultStr) > -1)) {
                 changeResultDisplay('item-result-3', true);
                 changeProgramDisplay('item-program-2', true);
                 changeProgramDisplay('item-program-3', true);
                 changeProgramDisplay('item-program-5', true);
                 changeProgramDisplay('item-program-7', true);
             }
-            
+
             // 如果前面选中了31,FA-决策层如果有选中了62则结果层显示7，解决方案显示2和3和4和5和7
             if ($.inArray('item-3-1', resultStr) > -1 && $.inArray('item-6-2', resultStr) > -1) {
                 changeResultDisplay('item-result-7', true);
@@ -1009,8 +1047,8 @@
                 changeProgramDisplay('item-program-7', true);
             }
             // 如果前面选中了31，FM-决策层选中了71或者72其中一个则结果层显示5，解决方案显示2和3和5和7
-            if ($.inArray('item-3-1', resultStr) > -1 && 
-            ($.inArray('item-7-1', resultStr) > -1 || $.inArray('item-7-2', resultStr) > -1)) {
+            if ($.inArray('item-3-1', resultStr) > -1 &&
+                ($.inArray('item-7-1', resultStr) > -1 || $.inArray('item-7-2', resultStr) > -1)) {
                 changeResultDisplay('item-result-5', true);
                 changeProgramDisplay('item-program-2', true);
                 changeProgramDisplay('item-program-3', true);
@@ -1019,11 +1057,12 @@
             }
 
             // 因子32组合策略
-            
+
             // 如果前面选中了32，TA-决策层选中了51或者52 则结果层显示2，解决方案显示2和3和5和7
             // 如果前面选中了32，FA-决策层如果选中了61 则结果层显示2，解决方案显示2和3和5和7；
-            if ($.inArray('item-3-2', resultStr) > -1 && 
-            ($.inArray('item-5-1', resultStr) > -1 || $.inArray('item-5-2', resultStr) > -1 || $.inArray('item-6-1', resultStr) > -1)) {
+            if ($.inArray('item-3-2', resultStr) > -1 &&
+                ($.inArray('item-5-1', resultStr) > -1 || $.inArray('item-5-2', resultStr) > -1 || $.inArray('item-6-1',
+                    resultStr) > -1)) {
                 changeResultDisplay('item-result-2', true);
                 changeProgramDisplay('item-program-2', true);
                 changeProgramDisplay('item-program-3', true);
@@ -1049,8 +1088,8 @@
                 changeProgramDisplay('item-program-7', true);
             }
             // 如果前面选中了32，FM-决策层选中了71或者72其中一个则结果层显示5，解决方案显示2和3和5和7
-            if ($.inArray('item-3-2', resultStr) > -1 && 
-            ($.inArray('item-7-1', resultStr) > -1 || $.inArray('item-7-2', resultStr) > -1)) {
+            if ($.inArray('item-3-2', resultStr) > -1 &&
+                ($.inArray('item-7-1', resultStr) > -1 || $.inArray('item-7-2', resultStr) > -1)) {
                 changeResultDisplay('item-result-5', true);
                 changeProgramDisplay('item-program-2', true);
                 changeProgramDisplay('item-program-3', true);
@@ -1059,7 +1098,7 @@
             }
 
             // 因子12组合策略
-            
+
             // 如果TA-决策层选中了53，则结果层显示8解决方案显示2和3
             if ($.inArray('item-1-2', resultStr) > -1 && $.inArray('item-5-3', resultStr) > -1) {
                 changeResultDisplay('item-result-8', true);
@@ -1081,10 +1120,42 @@
                         changeResultDisplay(value.viewId, false);
                     }
                     if (value.level == 9) {
-                        changeProgramDisplay(value.viewId, false)
+                        changeProgramDisplay(value.viewId, false);
                     }
                 });
             }
+        }
+        // 点击无影响忽略同级别其他选项的方法
+        function actionIgnore(levelNum) {
+            $.each(nodeBeanList, function (index, value) {
+                if (value.level == levelNum && value.name !== "无影响") {
+                    value.checked = false;
+                    var itemView = $("#" + value.viewId);
+                    itemView.prop('checked', false).change();
+                    itemView.prop('disabled', true);
+                }
+            });
+        }
+
+        function actionRestoreIgnore(levelNum) {
+            $.each(nodeBeanList, function (index, value) {
+                if (value.level == levelNum) {
+                    var itemView = $("#" + value.viewId);
+                    itemView.prop('disabled', false);
+                }
+            });
+        }
+
+        // 清理选中状态(高于给定级别的Item)
+        function clearStateWithLevel(levelNum) {
+            $.each(nodeBeanList, function (index, value) {
+                if (value.level > levelNum) {
+                    var itemView = $("#" + value.viewId);
+                    itemView.prop('checked', false).change();
+                    // 移出选中的连接线
+                    removeConnector(value.level);
+                }
+            });
         }
     </script>
 </body>
