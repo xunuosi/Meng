@@ -36,3 +36,13 @@
     margin-left: 2rem;
     margin-right: 2rem;
 }
+
+.padding-lr-5 {
+    padding-left: 5rem;
+    padding-right: 5rem;
+}
+
+.padding-tb-2 {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
